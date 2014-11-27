@@ -1,12 +1,15 @@
 package ua.ukrdev.deal.dao;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ua.ukrdev.deal.form.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,14 +32,6 @@ public class UserDaoImpl implements UserDao {
     	
     	query.setParameter("role", role);
 	    return query.list();
-    }
-
-    public void removeUser(Integer id) {
-        User user1 = (User) sessionFactory.getCurrentSession().load(
-                User.class, id);
-        if (null != user1) {
-            sessionFactory.getCurrentSession().delete(user1);
-        }
     }
 
     public User checkIfUserExistsByUsername(String username) {
@@ -87,5 +82,32 @@ public class UserDaoImpl implements UserDao {
 	        else
 	            return false;
 	    }
+    
+    public User getUserById(Integer id) {  
+    	Session session = sessionFactory.openSession();  
+    	User user = (User) session.load(User.class, id);  
+    	return user;  
+    }  
+
+    public Integer updateUser (User user) {  
+	     Session session = sessionFactory.openSession();  
+	     Transaction tx = session.beginTransaction();  
+	     session.saveOrUpdate(user);  
+	     tx.commit();  
+	     Serializable id = session.getIdentifier(user);  
+	     session.close();  
+	     return (Integer) id;  
+    }  
+     
+    public Integer removeUser (Integer id) {  
+	     Session session = sessionFactory.openSession();  
+	     Transaction tx = session.beginTransaction();  
+	     User user = (User) session.load(User.class, id);  
+	     session.delete(user);  
+	     tx.commit();  
+	     Serializable ids = session.getIdentifier(user);  
+	     session.close();  
+	     return (Integer) ids;  
+    }  
 
 }

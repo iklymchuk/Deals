@@ -4,6 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import ua.ukrdev.deal.form.User;
 import ua.ukrdev.deal.service.UserService;
 
@@ -45,8 +50,7 @@ public class RegistrationValidation {
                     "usernameExists",
                     "User with such username already exist.");
         }
-
-
-
     }
+	
+	
 }

@@ -3,8 +3,11 @@ package ua.ukrdev.deal.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import ua.ukrdev.deal.form.User;
 import ua.ukrdev.deal.service.SendEmail;
@@ -31,10 +34,7 @@ public class RegistrationController {
     private final Integer userStartBalance = 50;
     private final Integer defaultOthersStartBalance = 0;
 
-
     Serv serv = new Serv();
-
-
 
     @Autowired
     private RegistrationValidation registrationValidation;
@@ -58,7 +58,7 @@ public class RegistrationController {
     // Process the form.
     @RequestMapping(method = RequestMethod.POST)
     public String processRegistration(@Valid User user,
-                                      BindingResult result) throws IOException {
+                                      BindingResult result, Map<String, Object> map) throws IOException {
         // set custom Validation by user
         registrationValidation.validate(user, result);
         if (result.hasErrors()) {
@@ -73,10 +73,16 @@ public class RegistrationController {
                 sendNotificationEmail(user);
                 
                 if (userService.checkRole(user.getUsername(), user.getPassword(), "MasterAdministrator")) {
+                	map.put("user", new User());
+                    map.put("listUsers", userService.listUsers("MasterDealer"));
                 	return "PageMasterAdministrator";
                 } else if (userService.checkRole(user.getUsername(), user.getPassword(), "MasterDealer")) {
+                	map.put("user", new User());
+                    map.put("listUsers", userService.listUsers("Dealer"));
                 	return "PageMasterDealer";
                 } else if (userService.checkRole(user.getUsername(), user.getPassword(), "Dealer")) {
+                	 map.put("user", new User());
+                     map.put("listUsers", userService.listUsers("User"));
                 	return "PageDealer";
                 }
                 
@@ -87,15 +93,7 @@ public class RegistrationController {
 
         return "PageUser";
     }
-    
-    public String listContactsMasterAdministrator(Map<String, Object> map) {
-
-        map.put("user", new User());
-        map.put("listUsers", userService.listUsers("MasterDealer"));
-
-        return "PageMasterAdministrator";
-    }
- 
+   
     private void assignPhotIfUploaded(User user) throws IOException, SQLException {
 
         String photoName = System.getProperty("java.io.tmpdir") + "/"+serv.getUploadedPhotoName();
@@ -107,7 +105,6 @@ public class RegistrationController {
         }
     }
 
-
     private byte[] readBytesFromFile(String filePath) throws IOException {
         File inputFile = new File(filePath);
         FileInputStream inputStream = new FileInputStream(inputFile);
@@ -117,7 +114,6 @@ public class RegistrationController {
 
         return fileBytes;
     }
-
 
     private static void saveBytesToFile(String filePath, byte[] fileBytes) throws IOException {
         FileOutputStream outputStream = new FileOutputStream(filePath);

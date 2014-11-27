@@ -3,12 +3,18 @@ package ua.ukrdev.deal.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import ua.ukrdev.deal.dao.UserDao;
 import ua.ukrdev.deal.form.User;
 import ua.ukrdev.deal.service.UserService;
 
 import javax.validation.Valid;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -59,32 +65,10 @@ public class LoginFormController {
         
         return "PageUser";
     }
- /*   
-    @RequestMapping("/PageMasterAdministrator")
-    public String listContactsMasterAdministrator(Map<String, Object> map) {
 
-        map.put("user", new User());
-        map.put("listUsers", userService.listUsers("MasterDealer"));
-
-        return "PageMasterAdministrator";
+    @RequestMapping(method=RequestMethod.DELETE)
+    public String deleteUser(@PathVariable("id") Integer id) {
+        userService.removeUser(id);
+        return "login";
     }
-    
-    @RequestMapping("/PageMasterDealer")
-    public String listContactsPageMasterDealer(Map<String, Object> map) {
-
-        map.put("user", new User());
-        map.put("listUsers", userService.listUsers("Dealer"));
-
-        return "PageMasterDealer";
-    }
-    
-    @RequestMapping("/PageDealer")
-    public String listContactsDealer(Map<String, Object> map) {
-
-        map.put("user", new User());
-        map.put("listUsers", userService.listUsers("User"));
-
-        return "PageDealer";
-    }
-*/
 }

@@ -10,9 +10,11 @@ import java.util.List;
 public interface UserDao {
     public Integer addUser(User user);
     public List<User> listUsers(String role);
-    public void removeUser(Integer id);
+    public Integer updateUser(User user);
+    public Integer removeUser(Integer id);
     public User checkIfUserExistsByUsername(String login);
     public User checkIfUserExistsByEmail(String email);
     public boolean checkIfUserWithSuchPasswordExists(String username, String password);
     public boolean checkRole(String username, String password, String role);
+    public User getUserById(Integer userId);
 }

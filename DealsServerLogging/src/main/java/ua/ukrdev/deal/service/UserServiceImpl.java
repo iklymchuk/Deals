@@ -1,7 +1,9 @@
 package ua.ukrdev.deal.service;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.ukrdev.deal.dao.UserDao;
 import ua.ukrdev.deal.form.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,15 +35,7 @@ public class UserServiceImpl implements UserService {
     	public List<User> listUsers(String role) {
             return userDAO.listUsers(role);
     }
-
-    public void removeUser(Integer id) {
-        User user = (User) sessionFactory.getCurrentSession().load(
-                User.class, id);
-        if (null != user) {
-            sessionFactory.getCurrentSession().delete(user);
-        }
-    }
-
+    
     public User checkIfUserExistsByUsername(String username) {
         List<User> user1List = new ArrayList<User>();
         Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :login");
@@ -89,4 +84,16 @@ public class UserServiceImpl implements UserService {
 	        else
 	            return false;
 	    }
+	
+	public User getUserById(Integer id) {  
+    	return userDAO.getUserById(id);  
+    }  
+
+    public Integer updateUser (User user) {   
+	     return userDAO.updateUser(user);
+    }  
+     
+    public Integer removeUser (Integer id) {  
+	     return userDAO.removeUser(id);
+    }  
 }
