@@ -1,0 +1,34 @@
+create database deals_db;
+
+create table IF NOT EXISTS deals_db.deals (
+trandid INT(10) AUTO_INCREMENT,
+MasterDealerID  INT(10)  DEFAULT 12 NOT NULL,
+DealerID  INT(10)  NOT NULL,
+AgentID INT(10) NOT NULL,
+AgentName  VARCHAR(30) NOT NULL,
+MSISDN DOUBLE NOT NULL,
+Amount DOUBLE NOT NULL,
+Transtate VARCHAR(10),
+System_id VARCHAR(30),
+day DATE,
+dtime TIME,
+err_code INT(8),
+err_description  VARCHAR(50),
+PRIMARY KEY (trandid)
+) ENGINE=InnoDb;
+
+create table IF NOT EXISTS deals_db.users (
+id INT(7) AUTO_INCREMENT,
+fname  VARCHAR(20),
+lname  VARCHAR(20),
+username  VARCHAR(20) NOT NULL UNIQUE,
+password  VARCHAR(20) NOT NULL,
+email  VARCHAR(40) NOT NULL UNIQUE,
+balance int(5),
+shopname  VARCHAR(20),
+role  VARCHAR(20),
+photo VARCHAR(50),
+PRIMARY KEY (id)
+) ENGINE=InnoDb;
+
+insert into deals_db.users(fname, lname, username, password, email, balance, role) values ('Lampros', 'Karageorgos', 'lampros','lampros1984', 'lamrpos.karageorgos@gmail.com', 100000, 'MasterAdministrator');

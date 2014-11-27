@@ -1,0 +1,92 @@
+package ua.ukrdev.deal.service;
+
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ua.ukrdev.deal.dao.UserDao;
+import ua.ukrdev.deal.form.User;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Eugene on 15.11.2014.
+ */
+@Service
+@Transactional
+public class UserServiceImpl implements UserService {
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    private UserDao userDAO;
+
+    public Integer addUser(User user) {
+        return (Integer) sessionFactory.getCurrentSession().save(user);
+    }
+    
+    @Transactional
+    	public List<User> listUsers(String role) {
+            return userDAO.listUsers(role);
+    }
+
+    public void removeUser(Integer id) {
+        User user = (User) sessionFactory.getCurrentSession().load(
+                User.class, id);
+        if (null != user) {
+            sessionFactory.getCurrentSession().delete(user);
+        }
+    }
+
+    public User checkIfUserExistsByUsername(String username) {
+        List<User> user1List = new ArrayList<User>();
+        Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :login");
+        query.setParameter("login", username);
+        user1List = query.list();
+        if (user1List.size() > 0)
+            return user1List.get(0);
+        else
+            return null;
+    }
+
+    public User checkIfUserExistsByEmail(String email) {
+        List<User> user1List = new ArrayList<User>();
+        Query query = sessionFactory.getCurrentSession().createQuery("from User where email = :mail");
+        query.setParameter("mail", email);
+        user1List = query.list();
+        if (user1List.size() > 0)
+            return user1List.get(0);
+        else
+            return null;
+    }
+
+    public boolean checkIfUserWithSuchPasswordExists(String username, String password) {
+        List<User> user1List = new ArrayList<User>();
+        Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :user and password= :pass");
+        query.setParameter("user", username);
+        query.setParameter("pass", password);
+        user1List = query.list();
+        if (user1List.size() > 0)
+            return true;
+        else
+            return false;
+    }
+
+	public boolean checkRole(String username, String password,
+			String role) {
+		
+		  		List<User> user1List = new ArrayList<User>();
+	        Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :user and password= :pass and role = :role");
+	        query.setParameter("user", username);
+	        query.setParameter("pass", password);
+	        query.setParameter("role", role);
+	        user1List = query.list();
+	        if (user1List.size() > 0)
+	            return true;
+	        else
+	            return false;
+	    }
+}
