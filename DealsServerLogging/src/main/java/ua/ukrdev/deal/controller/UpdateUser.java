@@ -1,10 +1,7 @@
 package ua.ukrdev.deal.controller;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +12,6 @@ import ua.ukrdev.deal.form.User;
 import ua.ukrdev.deal.service.UserService;
 
 @Controller
-@RequestMapping("/updateUser.html")
 public class UpdateUser {
 	    
 	    @Autowired
@@ -29,11 +25,11 @@ public class UpdateUser {
 	        return modelAndView;
 	    }
 	    
-	    @RequestMapping(value="/team/edit/{id}", method=RequestMethod.POST)
+	    @RequestMapping(value="/updateUser/{id}", method=RequestMethod.POST)
 	    public ModelAndView edditingUser (@ModelAttribute User user, @PathVariable Integer id) {
-	    	ModelAndView modelAndView = new ModelAndView("UserPage");
+	    	ModelAndView modelAndView = new ModelAndView("someUserPage");
 	    	userService.updateUser(user);
 	    	return modelAndView;
-	    }	    
+	    }
+
 }
-	

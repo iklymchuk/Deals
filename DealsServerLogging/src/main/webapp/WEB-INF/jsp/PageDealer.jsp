@@ -27,7 +27,7 @@
 				<td>${user.username}</td>
 				<td>${user.role}</td>
 				<td>${user.balance}	</td>
-				<td><a href="/DealsServerLogging/updateUser/${currentUser.id}.html">Edit</a></td>  
+				<td><a href="/DealsServerLogging/updateUser/${user.id}.html">Edit</a></td>  
 			</tr>
 		</c:forEach>
 	</table>

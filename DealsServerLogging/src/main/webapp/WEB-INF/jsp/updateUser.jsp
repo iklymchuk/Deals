@@ -9,7 +9,7 @@
 </head>
 <body>
 <h3>Update User Profile:</h3>
-<form:form method="POST" commandname="user" action="updateUser.html">
+<form:form method="POST" commandname="user" action="/updateUser/{user.id}">
 	<table>
         <tr>
         	</td> <input type = "text" value="add balance"></td>

@@ -84,7 +84,9 @@ public class UserDaoImpl implements UserDao {
 	    }
     
     public User getUserById(Integer id) {  
-    	return (User) ((Session) sessionFactory).load(User.class, id);
+    	Session session = this.sessionFactory.getCurrentSession();     
+    	User user = (User) session.load(User.class, new Integer(id));
+    	return user;
     }  
 
     public void updateUser (User user) {  
