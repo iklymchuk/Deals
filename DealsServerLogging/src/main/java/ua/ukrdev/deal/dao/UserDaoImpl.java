@@ -84,30 +84,22 @@ public class UserDaoImpl implements UserDao {
 	    }
     
     public User getUserById(Integer id) {  
-    	Session session = sessionFactory.openSession();  
-    	User user = (User) session.load(User.class, id);  
-    	return user;  
+    	return (User) ((Session) sessionFactory).load(User.class, id);
     }  
 
-    public Integer updateUser (User user) {  
-	     Session session = sessionFactory.openSession();  
-	     Transaction tx = session.beginTransaction();  
-	     session.saveOrUpdate(user);  
-	     tx.commit();  
-	     Serializable id = session.getIdentifier(user);  
-	     session.close();  
-	     return (Integer) id;  
+    public void updateUser (User user) {  
+    	sessionFactory.getCurrentSession().update(user);
     }  
-     
-    public Integer removeUser (Integer id) {  
-	     Session session = sessionFactory.openSession();  
-	     Transaction tx = session.beginTransaction();  
-	     User user = (User) session.load(User.class, id);  
-	     session.delete(user);  
-	     tx.commit();  
-	     Serializable ids = session.getIdentifier(user);  
-	     session.close();  
-	     return (Integer) ids;  
-    }  
+
+	public User getCurrentUser(String username) {
+		List<User> user1List = new ArrayList<User>();
+        Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :user");
+        query.setParameter("user", username);
+        user1List = query.list();
+        if (user1List.size() > 0)
+            return user1List.get(0);
+        else
+            return null;
+	}
 
 }

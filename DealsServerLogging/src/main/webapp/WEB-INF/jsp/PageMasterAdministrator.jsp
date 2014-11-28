@@ -7,21 +7,26 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf8">
-	<title>Hello Master Administrator</title>
+	<title>Welcome Master Administrator</title>
 </head>
 <body>
 
-<h2>Welcome Master Administrator</h2>
+<h2>Welcome, ${currentUser.username}! Your balance is: ${currentUser.balance}</h2>
 
+<h3>Your Master Dealers:</h3>
 	<table class="data">
-		
+		<tr>
+			<th><spring:message code="label.username" /></th>
+			<th><spring:message code="label.role" /></th>
+			<th><spring:message code="label.balance" /></th>
+			<th>&nbsp;</th>
+		</tr>
 		<c:forEach items="${listUsers}" var="user">
 			<tr>
 				<td>${user.username}</td>
 				<td>${user.role}</td>
 				<td>${user.balance}</td>
 				<td><a href="edit?id=${user.id}">Edit</a></td>  
-      			<td><a href="delete?id=${user.id}">Delete</a></td>  
 			</tr>
 		</c:forEach>
 	</table>

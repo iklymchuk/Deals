@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<h2>Welcome, ${user.username}</h2>
+<h2>Welcome, ${currentUser.username}! Your balance is: ${currentUser.balance}</h2>
 
 </body>
 </html>

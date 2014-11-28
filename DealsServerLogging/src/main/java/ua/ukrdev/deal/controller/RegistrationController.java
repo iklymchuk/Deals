@@ -75,14 +75,17 @@ public class RegistrationController {
                 if (userService.checkRole(user.getUsername(), user.getPassword(), "MasterAdministrator")) {
                 	map.put("user", new User());
                     map.put("listUsers", userService.listUsers("MasterDealer"));
+                    map.put("currentUser", userService.getCurrentUser(user.getUsername()));
                 	return "PageMasterAdministrator";
                 } else if (userService.checkRole(user.getUsername(), user.getPassword(), "MasterDealer")) {
                 	map.put("user", new User());
                     map.put("listUsers", userService.listUsers("Dealer"));
+                    map.put("currentUser", userService.getCurrentUser(user.getUsername()));
                 	return "PageMasterDealer";
                 } else if (userService.checkRole(user.getUsername(), user.getPassword(), "Dealer")) {
                 	 map.put("user", new User());
                      map.put("listUsers", userService.listUsers("User"));
+                     map.put("currentUser", userService.getCurrentUser(user.getUsername()));
                 	return "PageDealer";
                 }
                 
@@ -90,7 +93,7 @@ public class RegistrationController {
                 e.printStackTrace();
             }
         }
-
+        map.put("currentUser", userService.getCurrentUser(user.getUsername()));
         return "PageUser";
     }
    
