@@ -14,7 +14,7 @@
 <h2>Welcome, ${currentUser.username}! Your balance is: ${currentUser.balance}</h2>
 
 <h3>Your Master Dealers:</h3>
-	<table class="data">
+	<table class="data" border="1">
 		<tr>
 			<th><spring:message code="label.username" /></th>
 			<th><spring:message code="label.role" /></th>
@@ -26,7 +26,7 @@
 				<td>${user.username}</td>
 				<td>${user.role}</td>
 				<td>${user.balance}</td>
-				<td><a href="/DealsServerLogging/updateUser/${user.id}.html">Edit</a></td>  
+				<td><a href="/updateUser/${user.id}">Edit</a></td>
 			</tr>
 		</c:forEach>
 	</table>
