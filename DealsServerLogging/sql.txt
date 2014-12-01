@@ -28,6 +28,8 @@ balance int(5),
 shopname  VARCHAR(20),
 role  VARCHAR(20),
 photo VARCHAR(50),
+islock ENUM("0","1"),
+assign VARCHAR(20),
 PRIMARY KEY (id)
 ) ENGINE=InnoDb;
 

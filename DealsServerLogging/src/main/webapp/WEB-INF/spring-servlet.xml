@@ -80,5 +80,5 @@
 
     <bean id="LoginValidation"
           class="ua.ukrdev.deal.controller.LoginValidation"/>
-
+          
         </beans>

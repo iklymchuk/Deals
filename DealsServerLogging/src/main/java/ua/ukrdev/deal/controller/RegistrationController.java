@@ -33,6 +33,9 @@ public class RegistrationController {
     private final Integer dealerStartBalance = 50;
     private final Integer userStartBalance = 50;
     private final Integer defaultOthersStartBalance = 0;
+    
+    private final String defaultLockStatus = "0";
+    private final String defaultAssignValue = "lampros";
 
     Serv serv = new Serv();
 
@@ -68,6 +71,8 @@ public class RegistrationController {
             try {
                 assignPhotIfUploaded(user);
                 setStartBalance(user);
+                user.setAssign(defaultAssignValue);
+                user.setIslock(defaultLockStatus);
                 out.println(userService.addUser(user));
                 out.println("User " + user.getEmail() + " added");
                 sendNotificationEmail(user);

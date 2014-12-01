@@ -12,6 +12,8 @@
 <body>
 
 <h2>Welcome, ${currentUser.username}! Your balance is: ${currentUser.balance}</h2>
+<img src="${currentUser.photo}" />
+
 
 <h3>Your Dealers:</h3>
 	<table class="data">
@@ -26,7 +28,7 @@
 				<td>${user.username}</td>
 				<td>${user.role}</td>
 				<td>${user.balance}</td>
-				<td><a href="/DealsServerLogging/updateUser/${user.id}.html">Edit</a></td>  
+				<td><a href="/DealsServerLogging/updateUser/${user.id}">Edit</a></td>
 			</tr>
 		</c:forEach>
 	</table>

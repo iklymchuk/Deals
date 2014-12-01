@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserService {
 	 	public Integer addUser(User user);
 	    public List<User> listUsers(String role);
-	    public void updateUser(User user);
+	    public void updateUser(Integer userId);
 	    public User checkIfUserExistsByUsername(String login);
 	    public User checkIfUserExistsByEmail(String email);
 	    public boolean checkIfUserWithSuchPasswordExists(String username, String password);

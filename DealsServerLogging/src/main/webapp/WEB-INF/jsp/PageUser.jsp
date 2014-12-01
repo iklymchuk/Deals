@@ -12,6 +12,6 @@
 <body>
 
 <h2>Welcome, ${currentUser.username}! Your balance is: ${currentUser.balance}</h2>
-
+<img src="${currentUser.photo}" />
 </body>
 </html>

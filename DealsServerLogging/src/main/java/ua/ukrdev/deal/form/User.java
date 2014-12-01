@@ -63,11 +63,19 @@ public class User {
 
     @Column(name="photo")
     private String photo;
+    
+    @NotEmpty
+    @Column(name="islock", columnDefinition="enum('0','1')")
+    private String islock;
+    
+    @NotEmpty
+    @Size(min = 4, max = 20)
+    @Column(name="assign")
+    private String assign;
 
     public String getPassword() {
         return password;
     }
-
 
     public void setPassword(String password) {
         this.password = password;
@@ -153,5 +161,19 @@ public class User {
         this.balance = balance;
     }
 
+	public String getIslock() {
+		return islock;
+	}
 
+	public void setIslock(String islock) {
+		this.islock = islock;
+	}
+
+	public String getAssign() {
+		return assign;
+	}
+
+	public void setAssign(String assign) {
+		this.assign = assign;
+	}
 }

@@ -9,16 +9,22 @@
 </head>
 <body>
 <h3>Update User Profile:</h3>
-<form:form method="POST" commandname="user" action="/updateUser/{user.id}">
+<form:form method="POST" commandname="user" action="someUserPage">
 	<table>
-        <tr>
-        	</td> <input type = "text" value="add balance"></td>
+	
+		<%-- Start Update isLock tr --%>
+		<tr>
+            <td>Lock user <FONT color="red"><form:errors path="islock" /></FONT></td>
+            <td>
+                <input type = "checkbox" name="lock">
+            </td>
+            
         </tr>
-
-        <tr>
+		<%-- Finish Update isLock tr --%>
+		
+		<%-- Start Update role tr --%>
+		<tr>
             <td>Change role:<FONT color="red"><form:errors path="role" /></FONT></td>
-        </tr>
-        <tr>
             <td>
                 <select name="role" onchange="">
                     <option value="User">User</option>
@@ -26,15 +32,30 @@
                     <option value="MasterDealer">MasterDealer</option>
                 </select>
             </td>
+            
         </tr>
-
-        <tr>
-            </td> <input type = "checkbox" value="lock"> Lock user? </td>
-        </tr>
-        
+		<%-- Finish Update role tr --%>
+     
 		<tr>
-			<td><input value="Edit" type="submit"></td>
+			<td>Balance <FONT color="red"><form:errors path="balance" /></FONT></td>
+			<td>
+				<input type = "text" value="add balance">
+			</td>
+			
 		</tr>
+		
+		<tr>
+			<td>Assign <FONT color="red"><form:errors path="assign" /></FONT></td>
+			<td>
+				<input type = "text" value="assign">
+			</td>
+			
+		</tr>
+
+			<td>
+            	<input value="Update" id = "update" type="submit">
+            </td> 
+
 	</table>
 </form:form>
 </body>
