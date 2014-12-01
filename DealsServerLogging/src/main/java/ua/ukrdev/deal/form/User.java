@@ -10,7 +10,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 @javax.persistence.Entity
-@javax.persistence.Table(name="USERS")
+@javax.persistence.Table(name="users")
 public class User {
 
     @Id
@@ -44,7 +44,6 @@ public class User {
     @Transient
 	private String confirmPassword;
 
-
 	@NotEmpty
 	@Email
     @Column(name="email")
@@ -64,11 +63,9 @@ public class User {
     @Column(name="photo")
     private String photo;
     
-    @NotEmpty
     @Column(name="islock", columnDefinition="enum('0','1')")
     private String islock;
     
-    @NotEmpty
     @Size(min = 4, max = 20)
     @Column(name="assign")
     private String assign;

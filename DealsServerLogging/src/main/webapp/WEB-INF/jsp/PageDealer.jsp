@@ -16,7 +16,7 @@
 
 <h3>Your Users:</h3>
 
-	<table class="data">
+	<table class="data" border="1">
 		<tr>
 			<th><spring:message code="label.username" /></th>
 			<th><spring:message code="label.role" /></th>

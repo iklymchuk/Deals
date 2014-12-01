@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import ua.ukrdev.deal.form.User;
@@ -88,8 +89,9 @@ public class UserDaoImpl implements UserDao {
     	User user = (User) session.load(User.class, new Integer(id));
     	return user;
     }  
-    
-    public void updateUser (Integer user) {  
+
+	public void updateUser (User user) {  
+    	//sessionFactory.getCurrentSession().save(user);
     	sessionFactory.getCurrentSession().update(user);
     }  
 
@@ -103,5 +105,6 @@ public class UserDaoImpl implements UserDao {
         else
             return null;
 	}
-
+	
+	
 }

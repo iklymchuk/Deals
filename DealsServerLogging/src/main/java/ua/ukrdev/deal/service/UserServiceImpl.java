@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
     	return userDAO.getUserById(id);  
     }  
 
-    public void updateUser (Integer user) {   
+    public void updateUser (User user) {   
 	     userDAO.updateUser(user);
     }  
 

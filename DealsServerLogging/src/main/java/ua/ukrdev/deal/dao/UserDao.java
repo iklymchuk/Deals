@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserDao {
     public Integer addUser(User user);
     public List<User> listUsers(String role);
-    public void updateUser(Integer user);
+    public void updateUser(User user);
     public User checkIfUserExistsByUsername(String login);
     public User checkIfUserExistsByEmail(String email);
     public boolean checkIfUserWithSuchPasswordExists(String username, String password);

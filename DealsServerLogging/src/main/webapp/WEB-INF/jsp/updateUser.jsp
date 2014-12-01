@@ -8,8 +8,8 @@
 <title>Update User Profile</title>
 </head>
 <body>
-<h3>Update User Profile:</h3>
-<form:form method="POST" commandname="user" action="someUserPage">
+<h3>Update ${currentUser.username} Profile:</h3>
+<form:form method="POST" commandname="user" action="2">
 	<table>
 	
 		<%-- Start Update isLock tr --%>
@@ -39,7 +39,7 @@
 		<tr>
 			<td>Balance <FONT color="red"><form:errors path="balance" /></FONT></td>
 			<td>
-				<input type = "text" value="add balance">
+				<input type = "text" name = "addBalance" value="add balance">
 			</td>
 			
 		</tr>
@@ -47,7 +47,7 @@
 		<tr>
 			<td>Assign <FONT color="red"><form:errors path="assign" /></FONT></td>
 			<td>
-				<input type = "text" value="assign">
+				<input type = "text" name = "assignValue" value="assign">
 			</td>
 			
 		</tr>
