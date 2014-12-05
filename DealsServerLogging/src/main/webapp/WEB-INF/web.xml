@@ -4,19 +4,18 @@
 	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
+	
+	
+<display-name>Spring3-Hibernate</display-name>
 
-	<display-name>Spring3-Hibernate</display-name>
-
-
-    <servlet>
-        <servlet-name>FileUploadHandler</servlet-name>
-        <servlet-class>ua.ukrdev.deal.controller.FileUploadHandler</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>FileUploadHandler</servlet-name>
-        <url-pattern>/upload</url-pattern>
-    </servlet-mapping>
-
+<servlet>
+<servlet-name>FileUploadHandler</servlet-name>
+<servlet-class>ua.ukrdev.deal.controller.FileUploadHandler</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>FileUploadHandler</servlet-name>
+<url-pattern>/upload</url-pattern>
+</servlet-mapping>
 
     <servlet>
 		<servlet-name>spring</servlet-name>
@@ -32,7 +31,8 @@
     <welcome-file-list>
         <welcome-file>registrationform.jsp</welcome-file>
     </welcome-file-list>
-
+    
+   
     <servlet>
         <servlet-name>StickyCaptcha</servlet-name>
         <servlet-class>nl.captcha.servlet.StickyCaptchaServlet</servlet-class>

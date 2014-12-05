@@ -25,7 +25,7 @@
 		<c:forEach items="${listUsers}" var="user">
 			<tr>
 				<td>${user.username}</td>
-				<td>${user.role}</td>
+            	<td>${user.role}</td>
 				<td>${user.balance}</td>
 				<td><a href="/DealsServerLogging/updateUser/${user.id}">Edit</a></td>
 			</tr>

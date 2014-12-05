@@ -63,7 +63,8 @@ public class User {
     @Column(name="photo")
     private String photo;
     
-    @Column(name="islock", columnDefinition="enum('0','1')")
+    @NotEmpty
+    @Column(name="islock")
     private String islock;
     
     @Size(min = 4, max = 20)

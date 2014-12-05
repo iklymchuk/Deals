@@ -34,7 +34,7 @@ public class RegistrationController {
     private final Integer userStartBalance = 50;
     private final Integer defaultOthersStartBalance = 0;
     
-    private final String defaultLockStatus = "0";
+    private final String defaultLockStatus = "no";
     private final String defaultAssignValue = "lampros";
 
     Serv serv = new Serv();
@@ -77,29 +77,18 @@ public class RegistrationController {
                 out.println("User " + user.getEmail() + " added");
                 sendNotificationEmail(user);
                 
-                if (userService.checkRole(user.getUsername(), user.getPassword(), "MasterAdministrator")) {
-                	map.put("user", new User());
-                    map.put("listUsers", userService.listUsers("MasterDealer"));
-                    map.put("currentUser", userService.getCurrentUser(user.getUsername()));
-                	return "PageMasterAdministrator";
-                } else if (userService.checkRole(user.getUsername(), user.getPassword(), "MasterDealer")) {
-                	map.put("user", new User());
-                    map.put("listUsers", userService.listUsers("Dealer"));
-                    map.put("currentUser", userService.getCurrentUser(user.getUsername()));
-                	return "PageMasterDealer";
-                } else if (userService.checkRole(user.getUsername(), user.getPassword(), "Dealer")) {
-                	 map.put("user", new User());
-                     map.put("listUsers", userService.listUsers("User"));
-                     map.put("currentUser", userService.getCurrentUser(user.getUsername()));
-                	return "PageDealer";
-                }
+                map.put("user", new User());
+                //map.put("listUsers", userService.listUsers("User"));
+                map.put("assignUsers", userService.getAssignUsers(user.getUsername()));
+                map.put("currentUser", userService.getCurrentUser(user.getUsername()));
+            return "profileUser";
+              
                 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        map.put("currentUser", userService.getCurrentUser(user.getUsername()));
-        return "PageUser";
+		return "profileUser";
     }
    
     private void assignPhotIfUploaded(User user) throws IOException, SQLException {

@@ -18,5 +18,6 @@ public interface UserService {
 	    public boolean checkRole(String username, String password, String role);
 	    public User getUserById(Integer userId);
 	    public User getCurrentUser(String username);
-
+	    public List<User> getAssignUsers (String assign);
+	    public boolean checkIsLocked (String username, String islock);
 }

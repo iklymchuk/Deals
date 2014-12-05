@@ -8,23 +8,17 @@
 <title>Update User Profile</title>
 </head>
 <body>
-<h3>Update ${currentUser.username} Profile:</h3>
-<form:form method="POST" commandname="user" action="2">
+<h3>Update ${user.username} Profile:</h3>
+
+<form:form method="POST" commandname="user" action="/updateUser/${user.id}">
+
+<%-- <form:form method="POST" commandname="user" action="<%=request.getContextPath()%>/updateUser/${user.id}"> --%>
+
 	<table>
-	
-		<%-- Start Update isLock tr --%>
-		<tr>
-            <td>Lock user <FONT color="red"><form:errors path="islock" /></FONT></td>
-            <td>
-                <input type = "checkbox" name="lock">
-            </td>
-            
-        </tr>
-		<%-- Finish Update isLock tr --%>
-		
+
 		<%-- Start Update role tr --%>
 		<tr>
-            <td>Change role:<FONT color="red"><form:errors path="role" /></FONT></td>
+            <td>Role:<FONT color="red"><form:errors path="role" /></FONT></td>
             <td>
                 <select name="role" onchange="">
                     <option value="User">User</option>
@@ -35,26 +29,38 @@
             
         </tr>
 		<%-- Finish Update role tr --%>
-     
-		<tr>
-			<td>Balance <FONT color="red"><form:errors path="balance" /></FONT></td>
-			<td>
-				<input type = "text" name = "addBalance" value="add balance">
-			</td>
-			
-		</tr>
 		
+		<%-- Start Update role tr --%>
 		<tr>
-			<td>Assign <FONT color="red"><form:errors path="assign" /></FONT></td>
-			<td>
-				<input type = "text" name = "assignValue" value="assign">
-			</td>
-			
+            <td>Lock:<FONT color="red"><form:errors path="islock" /></FONT></td>
+            <td>
+                <select name="islock" onchange="">
+                    <option value="no">no</option>
+                    <option value="yes">yes</option>
+                </select>
+            </td>
+            
+        </tr>
+        
+        <tr>
+        
+		<td>Add balance <FONT color="red"><form:errors path="balance" /></FONT></td>
+		<td>
+		<input type = "text" name = "addBalance" value="add balance">
+		</td>
+		</tr>
+		<tr>
+		<td>Assign <FONT color="red"><form:errors path="assign" /></FONT></td>
+		<td>
+		<input type = "text" name = "assignValue" value="assign">
+		</td>
 		</tr>
 
+		<tr>
 			<td>
             	<input value="Update" id = "update" type="submit">
             </td> 
+        </tr>
 
 	</table>
 </form:form>

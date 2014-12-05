@@ -21,6 +21,10 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
     @Autowired
     private SessionFactory sessionFactory;
+    
+    private Session getCurrentSession() {
+    	return sessionFactory.getCurrentSession();
+    }
 
     public Integer addUser(User user1) {
         return (Integer) sessionFactory.getCurrentSession().save(user1);
@@ -85,16 +89,25 @@ public class UserDaoImpl implements UserDao {
 	    }
     
     public User getUserById(Integer id) {  
-    	Session session = this.sessionFactory.getCurrentSession();     
-    	User user = (User) session.load(User.class, new Integer(id));
+    	User user = (User) getCurrentSession().get(User.class, id);
     	return user;
     }  
-
+    
+    public void updateUser (User user) {  
+    	User userToUpdate = getUserById(user.getId());
+    		userToUpdate.setRole(user.getRole());
+    		userToUpdate.setBalance(user.getBalance());
+    		userToUpdate.setAssign(user.getAssign());
+    		userToUpdate.setIslock(user.getIslock());
+    	getCurrentSession().update(user);
+    }
+    
+    /*
 	public void updateUser (User user) {  
     	//sessionFactory.getCurrentSession().save(user);
     	sessionFactory.getCurrentSession().update(user);
     }  
-
+*/
 	public User getCurrentUser(String username) {
 		List<User> user1List = new ArrayList<User>();
         Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :user");
@@ -106,5 +119,22 @@ public class UserDaoImpl implements UserDao {
             return null;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<User> getAssignUsers (String assign) {
+	    Query query = sessionFactory.getCurrentSession().createQuery("from User where assign = :assign");
+	    query.setParameter("assign", assign);
+	    return query.list();
+	}
 	
+	public boolean checkIsLocked(String username, String islock) {
+        List<User> user1List = new ArrayList<User>();
+        Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :user and islock = :islock");
+        query.setParameter("user", username);
+        query.setParameter("islock", islock);
+        user1List = query.list();
+        if (user1List.size() > 0)
+            return true;
+        else
+            return false;
+	}  
 }

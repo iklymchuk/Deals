@@ -85,6 +85,13 @@ public class UserServiceImpl implements UserService {
 	            return false;
 	    }
 	
+	@SuppressWarnings("unchecked")
+	public List<User> getAssignUsers (String assign) {
+	    Query query = sessionFactory.getCurrentSession().createQuery("from User where assign = :assign");
+	    query.setParameter("assign", assign);
+	    return query.list();
+	}
+	
 	public User getUserById(Integer id) {  
     	return userDAO.getUserById(id);  
     }  
@@ -95,5 +102,17 @@ public class UserServiceImpl implements UserService {
 
 	public User getCurrentUser(String username) {
 		return userDAO.getCurrentUser(username);
+	}
+
+	public boolean checkIsLocked(String username, String islock) {
+        List<User> user1List = new ArrayList<User>();
+        Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :user and islock = :islock");
+        query.setParameter("user", username);
+        query.setParameter("islock", islock);
+        user1List = query.list();
+        if (user1List.size() > 0)
+            return true;
+        else
+            return false;
 	}  
 }

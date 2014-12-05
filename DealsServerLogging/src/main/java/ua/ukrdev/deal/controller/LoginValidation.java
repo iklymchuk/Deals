@@ -37,5 +37,10 @@ public class LoginValidation implements Validator {
         if (!userService.checkIfUserWithSuchPasswordExists(user.getUsername(), user.getPassword())) {
             errors.rejectValue("password", "wrong username", "Incorrect username or password");
         }
+
+        
+ //       if (userService.checkIsLocked(user.getUsername(), user.getIslock() == null)) {
+//       	errors.rejectValue("isLock", "locked user", "Sorry, your accaunt was blocked!");
+ //       }
     }
 }
