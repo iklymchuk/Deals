@@ -2,17 +2,16 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Update User Profile</title>
 </head>
 <body>
-<h3>Update ${user.username} Profile:</h3>
+<h3>Update ${user.username} Profile. Current balance is ${user.balance}.</h3>
 
-<form:form method="POST" commandname="user" action="/updateUser/${user.id}">
-
-<%-- <form:form method="POST" commandname="user" action="<%=request.getContextPath()%>/updateUser/${user.id}"> --%>
+<form:form method="POST" commandName="user" action="/DealsServerLogging/updateUser/${user.id}">
 
 	<table>
 
@@ -42,8 +41,19 @@
             
         </tr>
         
+      
+      	<tr>
+       		<td><form:label path="balance">Balance</form:label></td>
+       		<td><form:input path="balance" /></td> 
+    	</tr>
+      
         <tr>
-        
+       		<td><form:label path="assign">Assign</form:label></td>
+       		<td><form:input path="assign" /></td> 
+    	</tr>
+   
+		<%-- 
+		
 		<td>Add balance <FONT color="red"><form:errors path="balance" /></FONT></td>
 		<td>
 		<input type = "text" name = "addBalance" value="add balance">
@@ -56,6 +66,7 @@
 		</td>
 		</tr>
 
+--%>
 		<tr>
 			<td>
             	<input value="Update" id = "update" type="submit">

@@ -1,7 +1,15 @@
 package ua.ukrdev.deal.controller;
 
+import static java.lang.System.out;
+
+import java.io.IOException;
+import java.util.Map;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,37 +48,47 @@ public class UpdateUser {
 	 }
 	
 	 @RequestMapping(value="/updateUser/{id}", method=RequestMethod.POST)
-	 	public ModelAndView edditingTeam(@ModelAttribute User user, @PathVariable Integer id) {
-
-		ModelAndView modelAndView = new ModelAndView("profileUser");
-	  
-		        userService.updateUser(user);
-	  
-	        String message = "User was successfully updated.";
-	        modelAndView.addObject("message", message);
+	 	public ModelAndView edditingUser(@ModelAttribute @Valid User user, BindingResult result,
+	 										@PathVariable Integer id) {
+		 
+		 		updateValidation.validate(user, result);
+		 		if (result.hasErrors()) {
+		 			out.println("Error on login attempt: " + result.getAllErrors());
+		 			return new ModelAndView("updateUser");
+		 		}
+	
+		 			ModelAndView modelAndView = new ModelAndView("profileUser");		
+		 				userService.updateUser(user);  
+		 					String message = "User was successfully updated.";
+		 					modelAndView.addObject("message", message);
 	
 	 	        return modelAndView;
 	     }
 
 	 /*
 	@RequestMapping(value = "/updateUser/{id}", method=RequestMethod.POST)
-	public String processRegistration(@Valid User user,
+	public String updateUser (@Valid User user,
             BindingResult result, Map<String, Object> map) throws IOException {
-
-			user.setUsername("newUser21");
-			user.setFname("newUser21");
-			user.setLname("newUser21");
-			user.setPassword("newUse21");
-			user.setConfirmPassword("newUse2r1");
-			user.setEmail("newUser21");
 		
-	        user.setIslock("0");
-	     		
-	     	userService.updateUser(user);
+			updateValidation.validate(user, result);
+				if (result.hasErrors()) {
+					out.println("Error on login attempt: " + result.getAllErrors());
+					return "incorrectBalance";
+				}
+
+					user.setUsername("newUser21");
+					user.setFname("newUser21");
+					user.setLname("newUser21");
+					user.setPassword("newUse21");
+					user.setConfirmPassword("newUse2r1");
+					user.setEmail("newUser21");
+				
+			        user.setIslock("0");
+			     		
+			     	userService.updateUser(user);
         
-        return "index";
+        return "profileUser";
 	}
-	
-	*/
+*/
 }
 

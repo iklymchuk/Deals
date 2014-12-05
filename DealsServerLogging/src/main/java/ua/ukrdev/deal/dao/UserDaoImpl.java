@@ -22,10 +22,12 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private SessionFactory sessionFactory;
     
+    /**
     private Session getCurrentSession() {
     	return sessionFactory.getCurrentSession();
     }
-
+*/
+    
     public Integer addUser(User user1) {
         return (Integer) sessionFactory.getCurrentSession().save(user1);
     }
@@ -87,9 +89,9 @@ public class UserDaoImpl implements UserDao {
 	        else
 	            return false;
 	    }
-    
+
     public User getUserById(Integer id) {  
-    	User user = (User) getCurrentSession().get(User.class, id);
+    	User user = (User) sessionFactory.getCurrentSession().get(User.class, id);
     	return user;
     }  
     
@@ -99,10 +101,11 @@ public class UserDaoImpl implements UserDao {
     		userToUpdate.setBalance(user.getBalance());
     		userToUpdate.setAssign(user.getAssign());
     		userToUpdate.setIslock(user.getIslock());
-    	getCurrentSession().update(user);
+    		
+    		sessionFactory.getCurrentSession().update(userToUpdate);
     }
     
-    /*
+/*
 	public void updateUser (User user) {  
     	//sessionFactory.getCurrentSession().save(user);
     	sessionFactory.getCurrentSession().update(user);

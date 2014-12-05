@@ -25,16 +25,8 @@ public class UpdateValidation {
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
 		
-		//String isLock = user.getIslock();
-		Integer balance = user.getBalance();
-		//String assign = user.getAssign();
-		
-		if (balance <=0 ) {
-			errors.rejectValue("balance", "Balance should be > 0");
-		} 
-		
-		if (!(balance instanceof Integer)) {
-			errors.rejectValue("balance", "Balance should be Integer");
+		if (!(user.getBalance() instanceof Integer) || user.getBalance() <=0) {
+			errors.rejectValue("balance", "Incorrec balance");
 		} 
 	}
 }
