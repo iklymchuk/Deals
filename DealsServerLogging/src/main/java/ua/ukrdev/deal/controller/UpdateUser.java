@@ -2,9 +2,7 @@ package ua.ukrdev.deal.controller;
 
 import static java.lang.System.out;
 
-import java.io.IOException;
-import java.util.Map;
-
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +46,11 @@ public class UpdateUser {
     
 	 }
 
-	/*
+	
 	 @RequestMapping(value="/updateUser/{id}", method=RequestMethod.POST)
 	 	public ModelAndView edditingUser(@ModelAttribute @Valid User user, BindingResult result,
-	 										@PathVariable Integer id) {
+	 										@PathVariable Integer id,
+	 										HttpServletRequest request) {
 		 
 		 		updateValidation.validate(user, result);
 		 		if (result.hasErrors()) {
@@ -61,26 +60,31 @@ public class UpdateUser {
 	
 		 			ModelAndView modelAndView = new ModelAndView("profileUser");	
 
-		 			
-		 			user.setFname(user.getFname());
-		 			user.setLname(user.getLname());
-		 			user.setUsername(user.getUsername());
-		 			user.setPassword(user.getPassword());
-		 			user.setEmail(user.getEmail());
-		 			user.setBalance(user.getBalance());
-		 			user.setShopname(user.getShopname());
-		 			user.setRole(user.getRole());
-		 			user.setIslock(user.getIslock());
-		 			user.setAssign(user.getAssign());
-		 			
+		 			user = userService.getUserById(id);
+		 	        modelAndView.addObject("user", user);
+		 	        modelAndView.addObject("assignUser", userService.getAssignUser(user.getAssign()));  
+		 	        
+		 	        //set new parameters
+			 	       user.setRole(request.getParameter("role"));
+			 	       user.setIslock(request.getParameter("islock"));
+			 	       user.setAssign(request.getParameter("assign"));
+
+			 	    //set balance
+		 	        Integer assignUserBalance = userService.getAssignUser(user.getAssign()).getBalance();
+		 	        Integer userBalance = user.getBalance();
+			 	    Integer inputBalanceValue = Integer.parseInt(request.getParameter("balance"));
+		 	        
+			 	       user.setBalance(assignUserBalance + userBalance + inputBalanceValue);
+
+		 
+		 			//update
 		 				userService.updateUser(user);  
-		 				
-		 					String message = "User was successfully updated.";
-		 					modelAndView.addObject("message", message);
-	
+
 	 	        return modelAndView;
 	     }
-*/
+
+	
+	/*
 	@RequestMapping(value = "/updateUser/{id}", method=RequestMethod.POST)
 	public String updateUser (@Valid User user,
             BindingResult result, Map<String, Object> map) throws IOException {
@@ -102,6 +106,6 @@ public class UpdateUser {
 	             
 	        	return "login.html";
 	}
-
+*/
 }
 
