@@ -40,13 +40,15 @@ public class UpdateUser {
         ModelAndView modelAndView = new ModelAndView("updateUser");
         User user = userService.getUserById(id);
         modelAndView.addObject("user", user);
+        modelAndView.addObject("assignUser", userService.getAssignUser(user.getAssign()));    
         
-        System.out.print("User in Get on updateUser controller is:" + user.getLname());
+        	System.out.print("User in Get on updateUser controller is:" + user.getLname());
         
         return modelAndView;      
     
 	 }
-	
+
+	/*
 	 @RequestMapping(value="/updateUser/{id}", method=RequestMethod.POST)
 	 	public ModelAndView edditingUser(@ModelAttribute @Valid User user, BindingResult result,
 	 										@PathVariable Integer id) {
@@ -57,15 +59,28 @@ public class UpdateUser {
 		 			return new ModelAndView("updateUser");
 		 		}
 	
-		 			ModelAndView modelAndView = new ModelAndView("profileUser");		
+		 			ModelAndView modelAndView = new ModelAndView("profileUser");	
+
+		 			
+		 			user.setFname(user.getFname());
+		 			user.setLname(user.getLname());
+		 			user.setUsername(user.getUsername());
+		 			user.setPassword(user.getPassword());
+		 			user.setEmail(user.getEmail());
+		 			user.setBalance(user.getBalance());
+		 			user.setShopname(user.getShopname());
+		 			user.setRole(user.getRole());
+		 			user.setIslock(user.getIslock());
+		 			user.setAssign(user.getAssign());
+		 			
 		 				userService.updateUser(user);  
+		 				
 		 					String message = "User was successfully updated.";
 		 					modelAndView.addObject("message", message);
 	
 	 	        return modelAndView;
 	     }
-
-	 /*
+*/
 	@RequestMapping(value = "/updateUser/{id}", method=RequestMethod.POST)
 	public String updateUser (@Valid User user,
             BindingResult result, Map<String, Object> map) throws IOException {
@@ -75,20 +90,18 @@ public class UpdateUser {
 					out.println("Error on login attempt: " + result.getAllErrors());
 					return "incorrectBalance";
 				}
-
-					user.setUsername("newUser21");
-					user.setFname("newUser21");
-					user.setLname("newUser21");
-					user.setPassword("newUse21");
-					user.setConfirmPassword("newUse2r1");
-					user.setEmail("newUser21");
 				
-			        user.setIslock("0");
-			     		
-			     	userService.updateUser(user);
-        
-        return "profileUser";
+				userService.updateUser(user); 
+				
+				 map.put("user", new User());
+	             //map.put("listUsers", userService.listUsers("User"));
+	             map.put("assignUsers", userService.getAssignUsers(user.getUsername()));
+	             map.put("currentUser", userService.getCurrentUser(user.getUsername()));
+	             
+	              
+	             
+	        	return "login.html";
 	}
-*/
+
 }
 

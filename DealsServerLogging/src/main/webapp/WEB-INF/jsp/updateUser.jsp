@@ -11,6 +11,8 @@
 <body>
 <h3>Update ${user.username} Profile. Current balance is ${user.balance}.</h3>
 
+<h3>Balance your manager is ${assignUser.balance}.</h3>
+
 <form:form method="POST" commandName="user" action="/DealsServerLogging/updateUser/${user.id}">
 
 	<table>
@@ -52,21 +54,6 @@
        		<td><form:input path="assign" /></td> 
     	</tr>
    
-		<%-- 
-		
-		<td>Add balance <FONT color="red"><form:errors path="balance" /></FONT></td>
-		<td>
-		<input type = "text" name = "addBalance" value="add balance">
-		</td>
-		</tr>
-		<tr>
-		<td>Assign <FONT color="red"><form:errors path="assign" /></FONT></td>
-		<td>
-		<input type = "text" name = "assignValue" value="assign">
-		</td>
-		</tr>
-
---%>
 		<tr>
 			<td>
             	<input value="Update" id = "update" type="submit">

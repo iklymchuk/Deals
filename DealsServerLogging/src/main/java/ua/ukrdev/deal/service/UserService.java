@@ -20,4 +20,6 @@ public interface UserService {
 	    public User getCurrentUser(String username);
 	    public List<User> getAssignUsers (String assign);
 	    public boolean checkIsLocked (String username, String islock);
+	    public User getAssignUser(String username);
+
 }

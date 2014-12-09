@@ -115,4 +115,15 @@ public class UserServiceImpl implements UserService {
         else
             return false;
 	}  
+	
+	public User getAssignUser(String username) {
+		List<User> user1List = new ArrayList<User>();
+        Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :user");
+        query.setParameter("user", username);
+        user1List = query.list();
+        if (user1List.size() > 0)
+            return user1List.get(0);
+        else
+            return null;
+	}
 }

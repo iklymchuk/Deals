@@ -92,9 +92,11 @@ public class UserDaoImpl implements UserDao {
 
     public User getUserById(Integer id) {  
     	User user = (User) sessionFactory.getCurrentSession().get(User.class, id);
+    	//User user = (User) sessionFactory.getCurrentSession().load(User.class, id);
     	return user;
     }  
-    
+   
+    /*
     public void updateUser (User user) {  
     	User userToUpdate = getUserById(user.getId());
     		userToUpdate.setRole(user.getRole());
@@ -102,15 +104,19 @@ public class UserDaoImpl implements UserDao {
     		userToUpdate.setAssign(user.getAssign());
     		userToUpdate.setIslock(user.getIslock());
     		
-    		sessionFactory.getCurrentSession().update(userToUpdate);
+    	sessionFactory.getCurrentSession().update(userToUpdate);
     }
-    
-/*
+    */
+
 	public void updateUser (User user) {  
     	//sessionFactory.getCurrentSession().save(user);
-    	sessionFactory.getCurrentSession().update(user);
+
+
+	    	sessionFactory.getCurrentSession().update(user);
+
+    	//sessionFactory.getCurrentSession().merge(user);
     }  
-*/
+
 	public User getCurrentUser(String username) {
 		List<User> user1List = new ArrayList<User>();
         Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :user");
@@ -140,4 +146,15 @@ public class UserDaoImpl implements UserDao {
         else
             return false;
 	}  
+	
+	public User getAssignUser(String username) {
+		List<User> user1List = new ArrayList<User>();
+        Query query = sessionFactory.getCurrentSession().createQuery("from User where username = :user");
+        query.setParameter("user", username);
+        user1List = query.list();
+        if (user1List.size() > 0)
+            return user1List.get(0);
+        else
+            return null;
+	}
 }
