@@ -94,6 +94,11 @@ Select photo to upload, if needed: <br />
 	<tr>
 		<td>
 			<script type="text/javascript">var RecaptchaOptions = {theme : 'clean'};</script> 
+			
+			<c:if test="${invalidRecaptcha == true}">
+                <span class="error_form_validation"><spring:message code="invalid.captcha" text="Invalid captcha please try again"/></span>
+            </c:if>
+			
 			<%
 			    ReCaptcha c = ReCaptchaFactory.newReCaptcha("6LcW3OASAAAAAKEJTHMmp_bo5kny4lZXeDtgcMqC",
 			    	"6LcW3OASAAAAAKVX2duVsSy2uMMHL105-jPDrHMD", false);

@@ -4,10 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Spring 3, MVC Examples</title>
+<title>DealsServerLogging</title>
 </head>
 <body>
-<h1>Spring 3, MVC Examples</h1>
+<h1>DealsServerLogging</h1>
+
+<%-- 
 <ul>
   <li><a href="helloworld.html">Hello World</a></li>
 </ul>
@@ -18,13 +20,16 @@
   <li><a href="validationform.html">Validation Form</a></li>
 </ul>
 <ul>
-  <li><a href="loginform.html">Login Form</a></li>
+	<li><a href="uploadfileindex.html">File Upload</a></li>
 </ul>
+--%>
+
 <ul>
   <li><a href="registrationform.html">Registration Form</a></li>
 </ul>
 <ul>
-	<li><a href="uploadfileindex.html">File Upload</a></li>
+  <li><a href="login.html">Login Form</a></li>
 </ul>
+
 </body>
 </html>
