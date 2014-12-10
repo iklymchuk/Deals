@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
+<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -85,11 +89,26 @@ Select photo to upload, if needed: <br />
                 </select>
             </td>
         </tr>
-		<tr>
+
+		
+	<tr>
+		<td>
+			<script type="text/javascript">var RecaptchaOptions = {theme : 'clean'};</script> 
+			<%
+			    ReCaptcha c = ReCaptchaFactory.newReCaptcha("6LcW3OASAAAAAKEJTHMmp_bo5kny4lZXeDtgcMqC",
+			    	"6LcW3OASAAAAAKVX2duVsSy2uMMHL105-jPDrHMD", false);
+			    out.print(c.createRecaptchaHtml(null, null));
+		    %>                
+		</td>
+	</tr>
+	
+	<tr>
 			<td><input type="submit" value="Submit" /></td>
 		</tr>
 	</table>
+	
 </form:form>
+<%-- 
 <img src="/stickyImg"><br/>
 <form method="post" action="captchaSubmit.jsp">
     Answer: <input name="answer" /><input type="submit" />
@@ -98,6 +117,10 @@ Select photo to upload, if needed: <br />
 <br><br>
 Already registered?
 <br>
+--%>
+
+<span style="color:#A73030;margin-left:30px;font-weight: bold;">*<spring:message code="required" text="required"/></span>
+
 <a href="login.html">Login</a>
 </body>
 

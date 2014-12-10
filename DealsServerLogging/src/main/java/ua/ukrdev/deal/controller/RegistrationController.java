@@ -1,20 +1,6 @@
 package ua.ukrdev.deal.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
-import ua.ukrdev.deal.form.User;
-import ua.ukrdev.deal.service.SendEmail;
-import ua.ukrdev.deal.service.UserService;
-import ua.ukrdev.deal.util.Serv;
-
-import javax.validation.Valid;
+import static java.lang.System.out;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +9,24 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 
-import static java.lang.System.out;
+import javax.servlet.ServletRequest;
+import javax.validation.Valid;
+
+import net.tanesha.recaptcha.ReCaptcha;
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import ua.ukrdev.deal.form.User;
+import ua.ukrdev.deal.service.SendEmail;
+import ua.ukrdev.deal.service.UserService;
+import ua.ukrdev.deal.util.Serv;
 
 @Controller
 @RequestMapping("/registrationform.html")
@@ -41,6 +44,9 @@ public class RegistrationController {
 
     @Autowired
     private RegistrationValidation registrationValidation;
+    
+    @Autowired
+    private ReCaptcha reCaptchaService = null;
 
     @Autowired
     private UserService userService;
@@ -61,13 +67,22 @@ public class RegistrationController {
     // Process the form.
     @RequestMapping(method = RequestMethod.POST)
     public String processRegistration(@Valid User user,
-                                      BindingResult result, Map<String, Object> map) throws IOException {
+                                      BindingResult result, Map<String, Object> map,
+                                      @RequestParam("recaptcha_challenge_field") String challangeField,
+                                      @RequestParam("recaptcha_response_field") String responseField,
+                                      ServletRequest servletRequest) throws IOException {
         // set custom Validation by user
         registrationValidation.validate(user, result);
-        if (result.hasErrors()) {
+        
+        String remoteAddr = servletRequest.getRemoteAddr();
+        //ReCaptchaResponse reCaptchaResponse = this.reCaptcha.checkAnswer(remoteAddress, challangeField, responseField);
+        
+        ReCaptchaResponse reCaptchaResponse = reCaptchaService.checkAnswer(remoteAddr, challangeField, responseField);
+        
+        if (result.hasErrors() ||  !reCaptchaResponse.isValid()) {
             return "registrationform";
         }
-        if (!result.hasErrors()) {
+        if (!result.hasErrors() && reCaptchaResponse.isValid()) {
             try {
                 assignPhotIfUploaded(user);
                 setStartBalance(user);
