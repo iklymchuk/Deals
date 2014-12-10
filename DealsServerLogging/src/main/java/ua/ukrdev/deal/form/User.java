@@ -10,7 +10,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 @javax.persistence.Entity
-@javax.persistence.Table(name="USERS")
+@javax.persistence.Table(name="users")
 public class User {
 
     @Id

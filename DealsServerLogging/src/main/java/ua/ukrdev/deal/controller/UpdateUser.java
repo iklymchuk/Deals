@@ -70,42 +70,36 @@ public class UpdateUser {
 			 	       user.setAssign(request.getParameter("assign"));
 
 			 	    //set balance
-		 	        Integer assignUserBalance = userService.getAssignUser(user.getAssign()).getBalance();
+			 	   User assignUser = userService.getAssignUser(user.getAssign());
+			 	       
+		 	        Integer assignUserBalance = assignUser.getBalance();
 		 	        Integer userBalance = user.getBalance();
 			 	    Integer inputBalanceValue = Integer.parseInt(request.getParameter("balance"));
-		 	        
-			 	       user.setBalance(assignUserBalance + userBalance + inputBalanceValue);
 
-		 
-		 			//update
+			 	    //update assignUser
+			 	    if (assignUserBalance >= inputBalanceValue) {
+			 	    	
+			 	    	if (!userService.checkRole(assignUser.getUsername(), assignUser.getPassword(),
+			 	    								"MasterAdministrator")) {
+			 	    		assignUser.setBalance(assignUserBalance - inputBalanceValue);
+			 				userService.updateUser(assignUser); 
+			 	    	}
+
+		 			//update user
+		 				user.setBalance(userBalance + inputBalanceValue);
 		 				userService.updateUser(user);  
+		 				
+		 				modelAndView.addObject("currentUser", assignUser);   
+		 				
+		 				//modelAndView.addObject("assignUsers", userService.getAssignUsers(user.getUsername()));
+		 				//modelAndView.addObject("currentUser", userService.getCurrentUser(user.getUsername()));
 
-	 	        return modelAndView;
+		 				return modelAndView;
+	 	        
+			 	   } else {
+			 		   return new ModelAndView("incorrectBalance");	
+			 		   
 	     }
-
-	
-	/*
-	@RequestMapping(value = "/updateUser/{id}", method=RequestMethod.POST)
-	public String updateUser (@Valid User user,
-            BindingResult result, Map<String, Object> map) throws IOException {
-		
-			updateValidation.validate(user, result);
-				if (result.hasErrors()) {
-					out.println("Error on login attempt: " + result.getAllErrors());
-					return "incorrectBalance";
-				}
-				
-				userService.updateUser(user); 
-				
-				 map.put("user", new User());
-	             //map.put("listUsers", userService.listUsers("User"));
-	             map.put("assignUsers", userService.getAssignUsers(user.getUsername()));
-	             map.put("currentUser", userService.getCurrentUser(user.getUsername()));
-	             
-	              
-	             
-	        	return "login.html";
-	}
-*/
+	 }
 }
 
