@@ -81,7 +81,7 @@
     <bean id="LoginValidation"
           class="ua.ukrdev.deal.controller.LoginValidation"/>
           
-    <bean id="reCaptcha" class="net.tanesha.recaptcha.ReCaptchaImpl">
+    <bean id="reCaptchaService" class="net.tanesha.recaptcha.ReCaptchaImpl">
         <property name="privateKey" value="6LcW3OASAAAAAKVX2duVsSy2uMMHL105-jPDrHMD"/>
     </bean>
           

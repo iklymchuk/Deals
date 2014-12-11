@@ -58,7 +58,7 @@ public class UpdateUser {
 		 			return new ModelAndView("updateUser");
 		 		}
 	
-		 			ModelAndView modelAndView = new ModelAndView("profileUser");	
+		 			ModelAndView modelAndView = new ModelAndView("successUpdate");	
 
 		 			user = userService.getUserById(id);
 		 	        modelAndView.addObject("user", user);
@@ -90,6 +90,8 @@ public class UpdateUser {
 		 				userService.updateUser(user);  
 		 				
 		 				modelAndView.addObject("currentUser", assignUser);   
+		 				modelAndView.addObject("user", user);   
+
 		 				
 		 				//modelAndView.addObject("assignUsers", userService.getAssignUsers(user.getUsername()));
 		 				//modelAndView.addObject("currentUser", userService.getCurrentUser(user.getUsername()));

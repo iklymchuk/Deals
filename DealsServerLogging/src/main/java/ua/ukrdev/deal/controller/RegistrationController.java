@@ -19,6 +19,7 @@ import net.tanesha.recaptcha.ReCaptchaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -79,7 +80,11 @@ public class RegistrationController {
         
         ReCaptchaResponse reCaptchaResponse = reCaptchaService.checkAnswer(remoteAddr, challangeField, responseField);
         
-        if (result.hasErrors() ||  !reCaptchaResponse.isValid()) {
+        if (result.hasErrors() /* ||  !reCaptchaResponse.isValid()	*/	) {
+            return "registrationform";
+        } else if (!reCaptchaResponse.isValid()) {
+        	map.put("errorMessage", "CAPTCHA Validation Failed! Try Again.");
+        	out.println("CAPTCHA Validation Failed! Try Again.");
             return "registrationform";
         }
         if (!result.hasErrors() && reCaptchaResponse.isValid()) {
