@@ -19,15 +19,20 @@
 </head>
 <body>
 <h3>User registration:</h3>
+
+<%-- 
 Select photo to upload, if needed: <br />
 <form method="post" action="upload" enctype="multipart/form-data">
 <input type="file" name="file" />
 <br/><br/>
 <input type="submit" value="Upload" />
 </form>
+--%>
 
-<form:form method="Post" action="registrationform.html"
-	commandName="user">
+<form:form method="Post" action="registrationform.html"	commandName="user" enctype="multipart/form-data">
+
+ 		File to upload: <input type="file" name="file" />
+
 	<table>
         <tr>
             <td>First Name:<FONT color="red"><form:errors

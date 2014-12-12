@@ -2,20 +2,30 @@ package ua.ukrdev.deal.controller;
 
 import static java.lang.System.out;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import net.tanesha.recaptcha.ReCaptcha;
 import net.tanesha.recaptcha.ReCaptchaImpl;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.hibernate.validator.internal.util.logging.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,6 +33,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import ua.ukrdev.deal.form.User;
 import ua.ukrdev.deal.service.SendEmail;
@@ -40,6 +51,8 @@ public class RegistrationController {
     
     private final String defaultLockStatus = "no";
     private final String defaultAssignValue = "lampros";
+    
+    private final String UPLOAD_DIRECTORY = System.getProperty("java.io.tmpdir");
 
     Serv serv = new Serv();
 
@@ -69,9 +82,13 @@ public class RegistrationController {
     @RequestMapping(method = RequestMethod.POST)
     public String processRegistration(@Valid User user,
                                       BindingResult result, Map<String, Object> map,
+                                      //captcha
                                       @RequestParam("recaptcha_challenge_field") String challangeField,
                                       @RequestParam("recaptcha_response_field") String responseField,
-                                      ServletRequest servletRequest) throws IOException {
+                                      ServletRequest servletRequest,
+                                      //upload
+                                      @RequestParam("file") MultipartFile file) throws IOException, SQLException {
+    									
         // set custom Validation by user
         registrationValidation.validate(user, result);
         
@@ -88,25 +105,34 @@ public class RegistrationController {
             return "registrationform";
         }
         if (!result.hasErrors() && reCaptchaResponse.isValid()) {
-            try {
-                assignPhotIfUploaded(user);
-                setStartBalance(user);
-                user.setAssign(defaultAssignValue);
-                user.setIslock(defaultLockStatus);
-                out.println(userService.addUser(user));
-                out.println("User " + user.getEmail() + " added");
-                sendNotificationEmail(user);
-                
-                map.put("user", new User());
-                //map.put("listUsers", userService.listUsers("User"));
-                map.put("assignUsers", userService.getAssignUsers(user.getUsername()));
-                map.put("currentUser", userService.getCurrentUser(user.getUsername()));
-            return "profileUser";
-              
-                
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        	if (!file.isEmpty()) {
+	        	String name = new File(file.getName()).getName();
+	        	
+	        	System.out.println("Name is: " + name);
+	        	
+	            String newFileName = formatNewNameBasedOnTime(name);
+	            String newFileFullName = UPLOAD_DIRECTORY + File.separator + newFileName;
+	              
+	            System.out.println(newFileFullName);
+	            
+	            user.setPhoto(newFileFullName);
+
+        	}
+      
+			       	
+			assignPhotIfUploaded(user);
+			setStartBalance(user);
+			user.setAssign(defaultAssignValue);
+			user.setIslock(defaultLockStatus);
+			out.println(userService.addUser(user));
+			out.println("User " + user.getEmail() + " added");
+			sendNotificationEmail(user);
+			
+			map.put("user", new User());
+			//map.put("listUsers", userService.listUsers("User"));
+			map.put("assignUsers", userService.getAssignUsers(user.getUsername()));
+			map.put("currentUser", userService.getCurrentUser(user.getUsername()));
+         return "profileUser";
         }
 		return "profileUser";
     }
@@ -148,5 +174,13 @@ public class RegistrationController {
         SendEmail se = new SendEmail();
         //se.send("lamrpos.karageorgos@gmail.com", "New user notification", "New user "+user.getFname()+" "+user.getLname()+" "+user.getUsername()+" "+user.getEmail()+" registerd."+"\n Role is "+user.getRole());
         se.send("klymhuk.ivan@gmail.com", "New user notification", "New user: "+user.getFname()+" "+user.getLname()+" "+user.getUsername()+" "+user.getEmail()+" registerd."+"\n Role is "+user.getRole());
+    }
+    
+    private String formatNewNameBasedOnTime(String currentName) {
+        Date dt = new Date();
+        out.println(dt.getTime());
+        if (currentName.split(Pattern.quote(".")).length>0)
+        return (dt.getTime()+"."+currentName.split(Pattern.quote("."))[0]);
+        else return (dt.getTime()+"_");
     }
 }
