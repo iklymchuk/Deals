@@ -17,7 +17,7 @@
 <h3>Balance your manager is ${assignUser.balance}.</h3>
 
 
-<form:form method="POST" commandName="user" action="/DealsServerLogging/updateUser/${user.id}"> 
+<form:form method="POST" commandName="user" action="${contextPath}/updateUser/${user.id}"> 
 <%-- <form:form method="POST" commandName="user" action="<%=request.getContextPath()%>/updateUser/${user.id}"> --%>
 
 

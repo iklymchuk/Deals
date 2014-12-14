@@ -33,12 +33,14 @@ public class UpdateUser {
     }
 
 	@RequestMapping(value = "/updateUser/{id}", method = RequestMethod.GET)
-    public ModelAndView updateUser(@PathVariable Integer id) {
+    public ModelAndView updateUser(@PathVariable Integer id, HttpServletRequest request) {
 
         ModelAndView modelAndView = new ModelAndView("updateUser");
         User user = userService.getUserById(id);
         modelAndView.addObject("user", user);
         modelAndView.addObject("assignUser", userService.getAssignUser(user.getAssign()));    
+        
+        modelAndView.addObject("contextPath", request.getContextPath());
         
         	System.out.print("User in Get on updateUser controller is:" + user.getLname());
         
