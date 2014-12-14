@@ -9,10 +9,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,8 +25,11 @@ import net.tanesha.recaptcha.ReCaptchaImpl;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import org.hibernate.validator.internal.util.logging.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +38,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import ua.ukrdev.deal.form.User;
 import ua.ukrdev.deal.service.SendEmail;
@@ -51,9 +58,7 @@ public class RegistrationController {
     
     private final String defaultLockStatus = "no";
     private final String defaultAssignValue = "lampros";
-    
-    private final String UPLOAD_DIRECTORY = System.getProperty("java.io.tmpdir");
-
+   
     Serv serv = new Serv();
 
     @Autowired
@@ -85,42 +90,53 @@ public class RegistrationController {
                                       //captcha
                                       @RequestParam("recaptcha_challenge_field") String challangeField,
                                       @RequestParam("recaptcha_response_field") String responseField,
-                                      ServletRequest servletRequest,
+                                      //ServletRequest servletRequest,
                                       //upload
-                                      @RequestParam("file") MultipartFile file) throws IOException, SQLException {
-    									
+                                      @RequestParam(value = "image", required = false) MultipartFile image,
+                                      HttpServletRequest request) throws IOException, SQLException, FileUploadException {
+
         // set custom Validation by user
         registrationValidation.validate(user, result);
         
-        String remoteAddr = servletRequest.getRemoteAddr();
+        String remoteAddr = request.getRemoteAddr();
         //ReCaptchaResponse reCaptchaResponse = this.reCaptcha.checkAnswer(remoteAddress, challangeField, responseField);
         
         ReCaptchaResponse reCaptchaResponse = reCaptchaService.checkAnswer(remoteAddr, challangeField, responseField);
         
-        if (result.hasErrors() /* ||  !reCaptchaResponse.isValid()	*/	) {
+        if (result.hasErrors()) {
             return "registrationform";
         } else if (!reCaptchaResponse.isValid()) {
         	map.put("errorMessage", "CAPTCHA Validation Failed! Try Again.");
         	out.println("CAPTCHA Validation Failed! Try Again.");
             return "registrationform";
-        }
-        if (!result.hasErrors() && reCaptchaResponse.isValid()) {
-        	if (!file.isEmpty()) {
-	        	String name = new File(file.getName()).getName();
-	        	
-	        	System.out.println("Name is: " + name);
-	        	
-	            String newFileName = formatNewNameBasedOnTime(name);
-	            String newFileFullName = UPLOAD_DIRECTORY + File.separator + newFileName;
-	              
-	            System.out.println(newFileFullName);
-	            
-	            user.setPhoto(newFileFullName);
+            
+        } else if (!result.hasErrors() && reCaptchaResponse.isValid()) {
+        	
+        
+        	if (!image.isEmpty()) {
 
+        		/*
+        		image.getContentType() -->>> image/png
+    			image.getName() -->>> image
+    			image.getOriginalFilename() -->>> url.png
+        		 */
+        		
+        		String fileType = (image.getContentType()).split(Pattern.quote("/"))[1];
+        		out.println("fileType -->>> " + fileType);
+        		String newFileName = request.getParameter("username");
+        		out.println("newFileName -->>> " + newFileName);
+        		 
+        		try {
+        		saveImage(request, newFileName + "." + fileType, image, user);
+        		} catch (IOException e) {
+        			result.reject(e.getMessage());
+        			out.println("IOException");
+        		return "registrationform";
+        		}
         	}
-      
-			       	
-			assignPhotIfUploaded(user);
+
+     
+            //another action after upload
 			setStartBalance(user);
 			user.setAssign(defaultAssignValue);
 			user.setIslock(defaultLockStatus);
@@ -132,9 +148,10 @@ public class RegistrationController {
 			//map.put("listUsers", userService.listUsers("User"));
 			map.put("assignUsers", userService.getAssignUsers(user.getUsername()));
 			map.put("currentUser", userService.getCurrentUser(user.getUsername()));
-         return "profileUser";
+			
+			return "profileUser";
         }
-		return "profileUser";
+        return "profileUser";
     }
    
     private void assignPhotIfUploaded(User user) throws IOException, SQLException {
@@ -180,7 +197,44 @@ public class RegistrationController {
         Date dt = new Date();
         out.println(dt.getTime());
         if (currentName.split(Pattern.quote(".")).length>0)
-        return (dt.getTime()+"."+currentName.split(Pattern.quote("."))[0]);
+        return (dt.getTime()+"."+currentName.split(Pattern.quote("."))[1]);
         else return (dt.getTime()+"_");
+    }
+    
+    ///////////////update image
+    private void validateImage(MultipartFile image) {
+    	if (!image.getContentType().equals("image/jpeg") | !image.getContentType().equals("image/png")) {
+    		out.println("image.getContentType() -->>> " + image.getContentType());
+    		out.println("image.getName() -->>> " + image.getName());
+    		out.println("image.getOriginalFilename() -->>> " + image.getOriginalFilename());
+    		
+    		/*
+    		image.getContentType() -->>> image/png
+			image.getName() -->>> image
+			image.getOriginalFilename() -->>> url.png
+    		 */
+    		
+    		out.println("Only JPG images are accepted");
+    	throw new RuntimeException("Only JPG images are accepted");
+    	}
+    }
+    	 
+    	private void saveImage(HttpServletRequest request, String filename, MultipartFile image, User user) throws RuntimeException, IOException {
+    	try {
+    		File file = new File(request.getRealPath("/") + "/images/" + filename);
+    				
+    		out.println("getPathInfo() -->>>" + request.getPathInfo());
+    		out.println("getContextPath() -->>>" + request.getContextPath());
+    		out.println("getRealPath(\"/\") -->>>" + request.getRealPath("/"));
+
+    				FileUtils.writeByteArrayToFile(file, image.getBytes());
+    				
+    				user.setPhoto("images\\" + filename);
+    				
+    				System.out.println("Go to the location:  " + file.toString()
+    				+ " on your computer and verify that the image has been stored.");
+    	} catch (IOException e) {
+    		out.println("catch IOException in the saveImage");
+    	}
     }
 }

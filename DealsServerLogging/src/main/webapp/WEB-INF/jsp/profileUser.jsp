@@ -15,7 +15,8 @@
 <body>
 
 <h2>Welcome, ${currentUser.username}! Your balance is: ${currentUser.balance}</h2>
-<img src="${currentUser.photo}" />
+
+<img src="<%=request.getRealPath("/")%>${currentUser.photo}" />
 
 <h3>Your Users:</h3>
 

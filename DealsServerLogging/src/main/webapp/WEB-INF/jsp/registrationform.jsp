@@ -31,9 +31,8 @@ Select photo to upload, if needed: <br />
 
 <form:form method="Post" action="registrationform.html"	commandName="user" enctype="multipart/form-data">
 
- 		File to upload: <input type="file" name="file" />
-
 	<table>
+	 	
         <tr>
             <td>First Name:<FONT color="red"><form:errors
                     path="fname" /></FONT></td>
@@ -57,7 +56,14 @@ Select photo to upload, if needed: <br />
 		<tr>
 			<td><form:input path="username" /></td>
 		</tr>
-
+		
+		<tr>
+	 		<td>Upload photo if you want: </td>
+	 	</tr>	
+	 	<tr>
+	 		<td><input type="file" name="image"></td>
+        </tr>
+        
 		<tr>
 			<td>Password:<FONT color="red"><form:errors
 				path="password" /></FONT></td>
@@ -91,6 +97,7 @@ Select photo to upload, if needed: <br />
         <tr>
             <td>Role:<FONT color="red"><form:errors path="role" /></FONT></td>
         </tr>
+        
         <tr>
             <td>
                 <select name="role" onchange="">
