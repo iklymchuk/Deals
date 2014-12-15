@@ -8,15 +8,6 @@
 	
 <display-name>Spring3-Hibernate</display-name>
 
-<servlet>
-<servlet-name>FileUploadHandler</servlet-name>
-<servlet-class>ua.ukrdev.deal.controller.FileUploadHandler</servlet-class>
-</servlet>
-<servlet-mapping>
-<servlet-name>FileUploadHandler</servlet-name>
-<url-pattern>/upload</url-pattern>
-</servlet-mapping>
-
     <servlet>
 		<servlet-name>spring</servlet-name>
 		<servlet-class>
@@ -33,34 +24,5 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     
-   
-    <servlet>
-        <servlet-name>StickyCaptcha</servlet-name>
-        <servlet-class>nl.captcha.servlet.StickyCaptchaServlet</servlet-class>
-        <init-param>
-            <param-name>width</param-name>
-            <param-value>250</param-value>
-        </init-param>
-        <init-param>
-            <param-name>height</param-name>
-            <param-value>75</param-value>
-        </init-param>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>StickyCaptcha</servlet-name>
-        <url-pattern>/stickyImg</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>AudioCaptcha</servlet-name>
-        <servlet-class>nl.captcha.servlet.AudioCaptchaServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>AudioCaptcha</servlet-name>
-        <url-pattern>/audio.wav</url-pattern>
-    </servlet-mapping>
-
 
 </web-app>
