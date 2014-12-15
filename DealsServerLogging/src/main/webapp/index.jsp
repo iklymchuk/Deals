@@ -9,21 +9,6 @@
 <body>
 <h1>DealsServerLogging</h1>
 
-<%-- 
-<ul>
-  <li><a href="helloworld.html">Hello World</a></li>
-</ul>
-<ul>
-  <li><a href="simpleForm.html">Simple Form</a></li>
-</ul>
- <ul>
-  <li><a href="validationform.html">Validation Form</a></li>
-</ul>
-<ul>
-	<li><a href="uploadfileindex.html">File Upload</a></li>
-</ul>
---%>
-
 <ul>
   <li><a href="registrationform.html">Registration Form</a></li>
 </ul>

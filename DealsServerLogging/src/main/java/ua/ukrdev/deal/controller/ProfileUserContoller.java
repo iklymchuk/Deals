@@ -45,9 +45,7 @@ public class ProfileUserContoller {
              //map.put("listUsers", userService.listUsers("User"));
              map.put("assignUsers", userService.getAssignUsers(user.getUsername()));
              map.put("currentUser", userService.getCurrentUser(user.getUsername()));
-             
-             
-             
+
         	return "updateUser";
         }
 

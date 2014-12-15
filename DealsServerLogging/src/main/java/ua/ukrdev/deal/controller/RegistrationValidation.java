@@ -51,6 +51,4 @@ public class RegistrationValidation {
                     "User with such username already exist.");
         }
     }
-	
-	
 }

@@ -16,18 +16,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>User registration</title>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body>
 <h3>User registration:</h3>
-
-<%-- 
-Select photo to upload, if needed: <br />
-<form method="post" action="upload" enctype="multipart/form-data">
-<input type="file" name="file" />
-<br/><br/>
-<input type="submit" value="Upload" />
-</form>
---%>
 
 <form:form method="Post" action="registrationform.html"	commandName="user" enctype="multipart/form-data">
 
@@ -108,16 +100,13 @@ Select photo to upload, if needed: <br />
             </td>
         </tr>
 
-		
 	<tr>
 		<td>
-
 	            <%
-	                ReCaptcha c = ReCaptchaFactory.newReCaptcha("6LcW3OASAAAAAKEJTHMmp_bo5kny4lZXeDtgcMqC",
-	                                    "6LcW3OASAAAAAKVX2duVsSy2uMMHL105-jPDrHMD", false);
+	                ReCaptcha c = ReCaptchaFactory.newReCaptcha("6Lf5R_8SAAAAAMF4zOwupGeh-iRf4frlWCxfQlLZ",
+	                                    "6Lf5R_8SAAAAAB5pRnY0ScNWdKc8KhXxkQVSmAy-", false);
 	            	out.print(c.createRecaptchaHtml(null, null));
 	            %>   
-
 		</td>
 	</tr>
 	
@@ -136,16 +125,6 @@ Select photo to upload, if needed: <br />
 	</table>
 	
 </form:form>
-<%-- 
-<img src="/stickyImg"><br/>
-<form method="post" action="captchaSubmit.jsp">
-    Answer: <input name="answer" /><input type="submit" />
-</form>
-
-<br><br>
-Already registered?
-<br>
---%>
 
 <a href="login.html">Login</a>
 </body>

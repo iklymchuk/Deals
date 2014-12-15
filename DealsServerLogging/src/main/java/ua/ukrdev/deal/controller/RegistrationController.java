@@ -115,12 +115,6 @@ public class RegistrationController {
         
         	if (!image.isEmpty()) {
 
-        		/*
-        		image.getContentType() -->>> image/png
-    			image.getName() -->>> image
-    			image.getOriginalFilename() -->>> url.png
-        		 */
-        		
         		String fileType = (image.getContentType()).split(Pattern.quote("/"))[1];
         		out.println("fileType -->>> " + fileType);
         		String newFileName = request.getParameter("username");
@@ -135,7 +129,6 @@ public class RegistrationController {
         		}
         	}
 
-     
             //another action after upload
 			setStartBalance(user);
 			user.setAssign(defaultAssignValue);
@@ -153,33 +146,6 @@ public class RegistrationController {
         }
         return "profileUser";
     }
-   
-    private void assignPhotIfUploaded(User user) throws IOException, SQLException {
-
-        String photoName = System.getProperty("java.io.tmpdir") + "/"+serv.getUploadedPhotoName();
-        if (serv.getUploadedPhotoName()!=null)  {
-//            byte[] photoBytes = readBytesFromFile(photoName);
-//            user.setPhoto(photoBytes);
-            out.println(serv.getUploadedPhotoName());
-            user.setPhoto(serv.getUploadedPhotoName());
-        }
-    }
-
-    private byte[] readBytesFromFile(String filePath) throws IOException {
-        File inputFile = new File(filePath);
-        FileInputStream inputStream = new FileInputStream(inputFile);
-        byte[] fileBytes = new byte[(int) inputFile.length()];
-        inputStream.read(fileBytes);
-        inputStream.close();
-
-        return fileBytes;
-    }
-
-    private static void saveBytesToFile(String filePath, byte[] fileBytes) throws IOException {
-        FileOutputStream outputStream = new FileOutputStream(filePath);
-        outputStream.write(fileBytes);
-        outputStream.close();
-    }
 
     private void setStartBalance(User user){
         if ("User".equals(user.getRole())) user.setBalance(userStartBalance); else
@@ -193,26 +159,12 @@ public class RegistrationController {
         se.send("klymhuk.ivan@gmail.com", "New user notification", "New user: "+user.getFname()+" "+user.getLname()+" "+user.getUsername()+" "+user.getEmail()+" registerd."+"\n Role is "+user.getRole());
     }
     
-    private String formatNewNameBasedOnTime(String currentName) {
-        Date dt = new Date();
-        out.println(dt.getTime());
-        if (currentName.split(Pattern.quote(".")).length>0)
-        return (dt.getTime()+"."+currentName.split(Pattern.quote("."))[1]);
-        else return (dt.getTime()+"_");
-    }
-    
-    ///////////////update image
+    ///update image
     private void validateImage(MultipartFile image) {
     	if (!image.getContentType().equals("image/jpeg") | !image.getContentType().equals("image/png")) {
     		out.println("image.getContentType() -->>> " + image.getContentType());
     		out.println("image.getName() -->>> " + image.getName());
     		out.println("image.getOriginalFilename() -->>> " + image.getOriginalFilename());
-    		
-    		/*
-    		image.getContentType() -->>> image/png
-			image.getName() -->>> image
-			image.getOriginalFilename() -->>> url.png
-    		 */
     		
     		out.println("Only JPG images are accepted");
     	throw new RuntimeException("Only JPG images are accepted");

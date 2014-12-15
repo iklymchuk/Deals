@@ -25,22 +25,14 @@ public class LoginValidation implements Validator {
         if (user.getUsername() == null || user.getUsername().length() == 0) {
             errors.rejectValue("username", "error.empty.field", "Please Enter User Name");
         }
-//        else if (!user.getUsername().equals("admin")) {
-//            errors.rejectValue("username", "unknown.user", "Unknown User");
-        // }
+
         if (user.getPassword() == null || user.getPassword().length() == 0) {
             errors.rejectValue("password", "error.empty.field", "Please Enter Password");
         }
-//        else if (!user.getPassword().equals("admin")) {
-//            errors.rejectValue("password", "wrong.password", "Wrong Password");
-//        }
+
         if (!userService.checkIfUserWithSuchPasswordExists(user.getUsername(), user.getPassword())) {
             errors.rejectValue("password", "wrong username", "Incorrect username or password");
         }
 
-        
- //       if (userService.checkIsLocked(user.getUsername(), user.getIslock() == null)) {
-//       	errors.rejectValue("isLock", "locked user", "Sorry, your accaunt was blocked!");
- //       }
     }
 }

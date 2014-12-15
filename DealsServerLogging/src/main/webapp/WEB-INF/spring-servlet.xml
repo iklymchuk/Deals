@@ -27,7 +27,6 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 
@@ -35,7 +34,6 @@
         <property name="maxUploadSize" value="1000000"/>
 
     </bean>
-
 
     <bean id="messageSource"
           class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -51,7 +49,6 @@
           p:driverClassName="${jdbc.driverClassName}"
           p:url="${jdbc.databaseurl}" p:username="${jdbc.username}"
           p:password="${jdbc.password}"/>
-
 
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -77,12 +74,11 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-
     <bean id="LoginValidation"
           class="ua.ukrdev.deal.controller.LoginValidation"/>
           
     <bean id="reCaptchaService" class="net.tanesha.recaptcha.ReCaptchaImpl">
-        <property name="privateKey" value="6LcW3OASAAAAAKVX2duVsSy2uMMHL105-jPDrHMD"/>
+        <property name="privateKey" value="6Lf5R_8SAAAAAB5pRnY0ScNWdKc8KhXxkQVSmAy-"/>
     </bean>
           
         </beans>

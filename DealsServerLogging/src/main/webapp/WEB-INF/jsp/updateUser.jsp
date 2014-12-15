@@ -2,8 +2,6 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -16,10 +14,7 @@
 
 <h3>Balance your manager is ${assignUser.balance}.</h3>
 
-
 <form:form method="POST" commandName="user" action="${contextPath}/updateUser/${user.id}"> 
-<%-- <form:form method="POST" commandName="user" action="<%=request.getContextPath()%>/updateUser/${user.id}"> --%>
-
 
 	<table>
 
@@ -35,9 +30,7 @@
             </td>
             
         </tr>
-		<%-- Finish Update role tr --%>
-		
-		<%-- Start Update role tr --%>
+
 		<tr>
             <td>Lock:<FONT color="red"><form:errors path="islock" /></FONT></td>
             <td>
@@ -48,8 +41,7 @@
             </td>
             
         </tr>
-        
-      
+
       	<tr>
        		<td><form:label path="balance">Balance</form:label></td>
        		<td><form:input path="balance" /></td> 

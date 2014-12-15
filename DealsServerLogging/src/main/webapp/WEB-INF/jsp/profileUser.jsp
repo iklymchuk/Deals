@@ -35,14 +35,6 @@
 				<td>
 
 				<a href="<%=request.getContextPath()%>/updateUser/${user.id}">Edit</a>
-				
-			<%-- 	<form:form method="POST" commandname="user" action="profileUser">
-
-            		<input value="Update" id = "update" type="submit">
-        
-				</form:form>
-				
-				   --%>
 				   
 				</td>
 			</tr>

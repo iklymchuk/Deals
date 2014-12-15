@@ -94,10 +94,6 @@ public class UpdateUser {
 		 				modelAndView.addObject("currentUser", assignUser);   
 		 				modelAndView.addObject("user", user);   
 
-		 				
-		 				//modelAndView.addObject("assignUsers", userService.getAssignUsers(user.getUsername()));
-		 				//modelAndView.addObject("currentUser", userService.getCurrentUser(user.getUsername()));
-
 		 				return modelAndView;
 	 	        
 			 	   } else {
