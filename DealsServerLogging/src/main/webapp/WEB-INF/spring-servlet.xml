@@ -80,5 +80,16 @@
     <bean id="reCaptchaService" class="net.tanesha.recaptcha.ReCaptchaImpl">
         <property name="privateKey" value="6Lf5R_8SAAAAAB5pRnY0ScNWdKc8KhXxkQVSmAy-"/>
     </bean>
+    
+    <bean id="pdfReport"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+          p:url="classpath:chathuranga-sample-report.jrxml"
+          p:reportDataKey="datasource" />
+  
+  
+  	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location" value="/WEB-INF/jasper-views.xml"/>
+        <property name="order" value="0"/>
+    </bean>   
           
         </beans>

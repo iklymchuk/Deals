@@ -16,6 +16,9 @@
 
 <h2>Welcome, ${currentUser.username}! Your balance is: ${currentUser.balance}</h2>
 
+<img class="imgs" border="0" src="<c:url value="/images/webapp/java_logo.png" />"\>
+<img border="0" src="<c:url value="/home/iklymchuk/FL/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/DealsServerLogging/images/testShowAvatar.jpeg" />"\>
+
 <img src="<%=request.getRealPath("/")%>${currentUser.photo}" />
 
 <h3>Your Users:</h3>
