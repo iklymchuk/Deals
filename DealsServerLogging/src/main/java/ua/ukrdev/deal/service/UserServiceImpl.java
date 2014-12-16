@@ -126,4 +126,8 @@ public class UserServiceImpl implements UserService {
         else
             return null;
 	}
+
+	public Session getSession() {
+		return userDAO.getSession();
+	}
 }

@@ -22,11 +22,10 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private SessionFactory sessionFactory;
     
-    /**
-    private Session getCurrentSession() {
+
+    public Session getSession() {
     	return sessionFactory.getCurrentSession();
     }
-*/
     
     public Integer addUser(User user1) {
         return (Integer) sessionFactory.getCurrentSession().save(user1);

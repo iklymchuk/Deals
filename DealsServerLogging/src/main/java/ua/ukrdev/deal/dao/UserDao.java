@@ -4,6 +4,8 @@ import ua.ukrdev.deal.form.User;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
 /**
  * Created by Eugene on 15.11.2014.
  */
@@ -20,5 +22,7 @@ public interface UserDao {
     public List<User> getAssignUsers (String assign);
     public boolean checkIsLocked (String username, String islock);
     public User getAssignUser(String username);
+    
+    public Session getSession();
 
 }
