@@ -1,18 +1,31 @@
 package ua.ukrdev.deal.dao;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import ua.ukrdev.deal.util.Exporter;
 import ua.ukrdev.deal.form.User;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Eugene on 15.11.2014.
@@ -138,4 +151,19 @@ public class UserDaoImpl implements UserDao {
         else
             return null;
 	}
+	
+	public JRDataSource getDataSource (String assign) {
+		List<User> user1List = new ArrayList<User>();
+		 	Query query = sessionFactory.getCurrentSession().createQuery("from User where assign = :assign");
+		    query.setParameter("assign", assign);
+		    user1List = query.list();
+			 
+			// Wrap the collection in a JRBeanCollectionDataSource
+			// This is one of the collections that Jasper understands
+			JRDataSource ds = new JRBeanCollectionDataSource(user1List);
+			 
+			// Return the wrapped collection
+			return ds;
+	}
+
 }

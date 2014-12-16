@@ -16,11 +16,7 @@
 
 <h2>Welcome, ${currentUser.username}! Your balance is: ${currentUser.balance}</h2>
 
-
-<form method="post" action="upload" >
-<a href="${downloadPdf}">Download PDF</a>
-<br/><br/>
-</form>
+<a href="<%=request.getContextPath()%>/download/xls/${currentUser.id}">Download</a>
 
 <img class="imgs" border="0" src="<c:url value="/images/webapp/java_logo.png" />"\>
 <img border="0" src="<c:url value="/home/iklymchuk/FL/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/DealsServerLogging/images/testShowAvatar.jpeg" />"\>

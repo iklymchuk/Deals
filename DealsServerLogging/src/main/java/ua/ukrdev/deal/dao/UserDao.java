@@ -4,6 +4,10 @@ import ua.ukrdev.deal.form.User;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jasperreports.engine.JRDataSource;
+
 import org.hibernate.Session;
 
 /**
@@ -24,5 +28,7 @@ public interface UserDao {
     public User getAssignUser(String username);
     
     public Session getSession();
+    
+    public JRDataSource getDataSource(String assign);
 
 }

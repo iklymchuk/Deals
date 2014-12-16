@@ -4,6 +4,10 @@ import ua.ukrdev.deal.form.User;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.jasperreports.engine.JRException;
+
 import org.hibernate.Session;
 
 /**
@@ -25,5 +29,6 @@ public interface UserService {
 	    public User getAssignUser(String username);
 	    
 	    public Session getSession();
-
+	    
+	    public void downloadXLS(HttpServletResponse response, String assign) throws JRException;
 }
