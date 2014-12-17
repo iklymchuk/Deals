@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.ukrdev.deal.dao.UserDao;
 import ua.ukrdev.deal.form.User;
 import ua.ukrdev.deal.util.Exporter;
+import ua.ukrdev.deal.util.ExporterPdf;
 
 /**
  * Created by Eugene on 15.11.2014.
@@ -156,7 +157,7 @@ public class UserServiceImpl implements UserService {
 	HashMap params = new HashMap();
 	params.put("Title", "DealsReport");
 	 
-	InputStream reportStream = this.getClass().getResourceAsStream("/dealsReport.jrxml");
+	InputStream reportStream = this.getClass().getResourceAsStream("/dealsReportX.jrxml");
 	 
 	// Retrieve our report template
 	JasperDesign jd = JRXmlLoader.load(reportStream);
@@ -199,6 +200,60 @@ public class UserServiceImpl implements UserService {
 	writeReportToResponseStream(response, baos);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void downloadPdf(HttpServletResponse response, String assign) throws JRException {
+
+	// Retrieve our data source
+	
+	JRDataSource ds = userDAO.getALLDataSource();
+	 
+	// params is used for passing extra parameters
+	HashMap params = new HashMap();
+	params.put("Title", "DealsReport");
+	 
+	InputStream reportStream = this.getClass().getResourceAsStream("/dealsReportX.jrxml");
+	 
+	// Retrieve our report template
+	JasperDesign jd = JRXmlLoader.load(reportStream);
+	 
+	// You can also load the template by directly adding the actual path, i.e.
+	//JasperDesign jd = JRXmlLoader.load("c:/krams/jasper/reports/tree-template.jrxml");
+	 
+	// You can also let Spring inject the template
+	// See http://stackoverflow.com/questions/734671/read-file-in-classpath
+	 
+	// Compile our report layout
+	JasperReport jr = JasperCompileManager.compileReport(jd);
+	 
+	// Creates the JasperPrint object
+	// It needs a JasperReport layout and a datasource
+	JasperPrint jp = JasperFillManager.fillReport(jr, params, ds);
+	 
+	// Create our output byte stream
+	// This is the stream where the data will be written
+	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	 
+	// Export to output stream
+	// The data will be exported to the ByteArrayOutputStream baos
+	// We delegate the exporting  to a custom Exporter instance
+	// The Exporter is a wrapper class I made. Feel free to remove or modify it
+	ExporterPdf exporter = new ExporterPdf();
+	exporter.export(jp, baos);
+	 
+	// Set our response properties
+	// Here you can declare a custom filename
+	String fileName = "DealsReport.pdf";
+	response.setHeader("Content-Disposition", "inline; filename="
+	+ fileName);
+	// Make sure to set the correct content type
+	// Each format has its own content type
+	response.setContentType("application/pdf");
+	response.setContentLength(baos.size());
+	 
+	// Write to reponse stream
+	writeReportToResponseStream(response, baos);
+	}
+	
 	private void writeReportToResponseStream(HttpServletResponse response,	ByteArrayOutputStream baos) {
 
 		try {
@@ -212,5 +267,10 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 
 		}
+	}
+
+	public JRDataSource getALLDataSource() {
+		// TODO Auto-generated method stub
+		return userDAO.getALLDataSource();
 	}
 }

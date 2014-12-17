@@ -153,14 +153,35 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	public JRDataSource getDataSource (String assign) {
-		List<User> user1List = new ArrayList<User>();
-		 	Query query = sessionFactory.getCurrentSession().createQuery("from User where assign = :assign");
+		List<User> listItem = new ArrayList<User>();
+		 	//Query query = sessionFactory.getCurrentSession().createQuery("from User where assign = :assign");
+		
+	 		Query query = sessionFactory.getCurrentSession().createQuery("from User where assign = :assign");
+
+		
 		    query.setParameter("assign", assign);
-		    user1List = query.list();
+		    
+		    for (int i = 0; i < query.list().size(); i++) {
+
+		    	listItem.add((User) query.list().get(i));
+		    	
+	        	System.out.print("Report count is -->>>" + i);
+
+		    }
 			 
 			// Wrap the collection in a JRBeanCollectionDataSource
 			// This is one of the collections that Jasper understands
-			JRDataSource ds = new JRBeanCollectionDataSource(user1List);
+			JRDataSource ds = new JRBeanCollectionDataSource(listItem);
+			 
+			// Return the wrapped collection
+			return ds;
+	}
+	
+	public JRDataSource getALLDataSource () {
+		
+		List users = sessionFactory.getCurrentSession().find("from User");
+
+		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(users);  
 			 
 			// Return the wrapped collection
 			return ds;

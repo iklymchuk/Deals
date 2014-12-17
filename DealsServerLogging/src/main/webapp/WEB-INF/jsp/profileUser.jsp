@@ -16,12 +16,12 @@
 
 <h2>Welcome, ${currentUser.username}! Your balance is: ${currentUser.balance}</h2>
 
-<a href="<%=request.getContextPath()%>/download/xls/${currentUser.id}">Download</a>
+<a href="<%=request.getContextPath()%>/download/xls/${currentUser.id}">Excel report</a>
 
-<img class="imgs" border="0" src="<c:url value="/images/webapp/java_logo.png" />"\>
-<img border="0" src="<c:url value="/home/iklymchuk/FL/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/DealsServerLogging/images/testShowAvatar.jpeg" />"\>
+<a href="<%=request.getContextPath()%>/download/pdf/${currentUser.id}">Pdf report</a>
 
-<img src="<%=request.getRealPath("/")%>${currentUser.photo}" />
+
+<img src="<%=request.getContextPath()%>/images/java_logo.png" />
 
 <h3>Your Users:</h3>
 

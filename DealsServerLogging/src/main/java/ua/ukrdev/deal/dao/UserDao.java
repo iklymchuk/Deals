@@ -30,5 +30,6 @@ public interface UserDao {
     public Session getSession();
     
     public JRDataSource getDataSource(String assign);
+    public JRDataSource getALLDataSource ();
 
 }
