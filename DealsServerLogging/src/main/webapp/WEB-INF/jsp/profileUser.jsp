@@ -19,8 +19,9 @@
 <p>
 	<a href="<%=request.getContextPath()%>/download/pdf/${currentUser.id}">Generate report</a>
 </p>
-
-<img src="<%=request.getContextPath()%>/images/java_logo.png" />
+<p>
+	<img src="<%=request.getContextPath()%>${currentUser.photo}" />
+</p>
 
 <h3>Your Users:</h3>
 

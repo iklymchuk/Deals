@@ -205,7 +205,7 @@ public class UserServiceImpl implements UserService {
 
 	// Retrieve our data source
 	
-	JRDataSource ds = userDAO.getALLDataSource();
+	JRDataSource ds = userDAO.getDataSource(assign);
 	 
 	// params is used for passing extra parameters
 	HashMap params = new HashMap();
