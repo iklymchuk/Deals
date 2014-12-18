@@ -16,10 +16,9 @@
 
 <h2>Welcome, ${currentUser.username}! Your balance is: ${currentUser.balance}</h2>
 
-<a href="<%=request.getContextPath()%>/download/xls/${currentUser.id}">Excel report</a>
-
-<a href="<%=request.getContextPath()%>/download/pdf/${currentUser.id}">Pdf report</a>
-
+<p>
+	<a href="<%=request.getContextPath()%>/download/pdf/${currentUser.id}">Generate report</a>
+</p>
 
 <img src="<%=request.getContextPath()%>/images/java_logo.png" />
 

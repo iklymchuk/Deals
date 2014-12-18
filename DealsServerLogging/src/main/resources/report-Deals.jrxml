@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportDeals" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2638790-d800-44ce-9b94-800cd95dcf4d">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="fname" class="java.lang.String"/>
+	<field name="lname" class="java.lang.String"/>
+	<field name="username" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="role" class="java.lang.String"/>
+	<field name="balance" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="11" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="11" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="94a2065c-c450-462b-b35b-05a2191eb8d2" isPrintRepeatedValues="false" x="0" y="4" width="90" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FirstName]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="01d1e845-5c86-49ad-83d8-15af9341791f" isPrintRepeatedValues="false" x="90" y="4" width="87" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LastNname]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5ef9dd1c-67f5-4026-ab96-dec27f9c2aff" isPrintRepeatedValues="false" x="177" y="4" width="88" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Username]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="27f01171-2a1c-4bee-ad66-438dfee3022d" isPrintRepeatedValues="false" x="265" y="4" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="901f2a9b-aa50-470b-8820-3deecbecae74" isPrintRepeatedValues="false" x="365" y="4" width="89" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Role]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="264f1e54-b222-45e1-97f0-d8c6c9167d5d" isPrintRepeatedValues="false" x="455" y="4" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Balance]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement uuid="ce863d17-3842-41f0-8c2d-ea3c27002a33" x="0" y="6" width="90" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="636ae31c-6b0b-40b4-997f-cec512b611db" x="90" y="6" width="87" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{lname}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f32e0fb2-e0d3-4d4b-9e98-597ee1a0e5b3" x="177" y="6" width="88" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4098e83e-8f44-4da0-86b7-79e62f8989e1" x="265" y="6" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d69fb8e5-8b26-4d9d-88e1-4e23eaf86c45" x="365" y="6" width="89" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{role}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="13c9e1b3-3389-4ed5-a8d5-16cf8d85a34f" x="454" y="6" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{balance}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

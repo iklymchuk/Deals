@@ -157,7 +157,7 @@ public class UserServiceImpl implements UserService {
 	HashMap params = new HashMap();
 	params.put("Title", "DealsReport");
 	 
-	InputStream reportStream = this.getClass().getResourceAsStream("/dealsReportX.jrxml");
+	InputStream reportStream = this.getClass().getResourceAsStream("/reportForDeals.jrxml");
 	 
 	// Retrieve our report template
 	JasperDesign jd = JRXmlLoader.load(reportStream);
@@ -211,7 +211,7 @@ public class UserServiceImpl implements UserService {
 	HashMap params = new HashMap();
 	params.put("Title", "DealsReport");
 	 
-	InputStream reportStream = this.getClass().getResourceAsStream("/dealsReportX.jrxml");
+	InputStream reportStream = this.getClass().getResourceAsStream("/reportForDeals.jrxml");
 	 
 	// Retrieve our report template
 	JasperDesign jd = JRXmlLoader.load(reportStream);
@@ -270,7 +270,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public JRDataSource getALLDataSource() {
-		// TODO Auto-generated method stub
 		return userDAO.getALLDataSource();
+	}
+
+	public List<User> getAssignReportUsers(String assign, String[] fields) {
+		return userDAO.getAssignReportUsers(assign, fields);
 	}
 }

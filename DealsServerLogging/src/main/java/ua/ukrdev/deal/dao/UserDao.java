@@ -31,5 +31,7 @@ public interface UserDao {
     
     public JRDataSource getDataSource(String assign);
     public JRDataSource getALLDataSource ();
+    
+    public List<User> getAssignReportUsers (String assign, String[] fields);
 
 }

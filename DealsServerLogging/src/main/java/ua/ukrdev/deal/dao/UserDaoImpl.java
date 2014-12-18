@@ -179,12 +179,24 @@ public class UserDaoImpl implements UserDao {
 	
 	public JRDataSource getALLDataSource () {
 		
+		List<User> listItem = new ArrayList<User>();
+		
 		List users = sessionFactory.getCurrentSession().find("from User");
+		
+		listItem = users;
+		
 
-		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(users);  
+		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(listItem);  
 			 
 			// Return the wrapped collection
 			return ds;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<User> getAssignReportUsers (String assign, String[] fields) {
+	    Query query = sessionFactory.getCurrentSession().createQuery("from User where assign = :assign");
+	    query.setParameter("assign", assign);
+	    return query.list();
 	}
 
 }

@@ -36,4 +36,6 @@ public interface UserService {
 	    public void downloadPdf(HttpServletResponse response, String assign) throws JRException;
 	    
 	    public JRDataSource getALLDataSource ();
+	    
+	    public List<User> getAssignReportUsers (String assign, String[] fields);
 }
